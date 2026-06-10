@@ -1,396 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSETS — UNPRINCIPLED</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
+        :root {
+            --accent: #67e8f9;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
 
-<title>ASSETS</title>
+        .star-bg {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000 80%);
+            z-index: -3;
+            overflow: hidden;
+        }
 
-<script src="https://cdn.tailwindcss.com"></script>
+        .stars {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            box-shadow: 
+                50px 80px 1px #fff,
+                180px 220px 1px #fff,
+                320px 140px 1px #fff,
+                450px 310px 1px #fff,
+                620px 90px 1px #fff,
+                780px 380px 1px #fff,
+                920px 150px 1px #fff,
+                1050px 420px 1px #fff,
+                120px 480px 1px #fff,
+                680px 520px 1px #fff;
+            animation: starTravel 140s linear infinite;
+            opacity: 0.75;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        .stars::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            box-shadow: 
+                220px 60px 1px #fff,
+                390px 290px 1px #fff,
+                710px 180px 1px #fff,
+                880px 410px 1px #fff,
+                1100px 80px 1px #fff,
+                140px 350px 1px #fff;
+            animation: starTravel 95s linear infinite;
+            opacity: 0.6;
+        }
 
-<style>
+        @keyframes starTravel {
+            from { transform: translateY(0); }
+            to { transform: translateY(-800px); }
+        }
 
-*{
-	margin:0;
-	padding:0;
-	box-sizing:border-box;
-}
+        .nebula {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(103, 232, 249, 0.18) 0%, transparent 65%);
+            filter: blur(140px);
+            animation: nebulaDrift 120s ease-in-out infinite;
+        }
 
-body{
-	font-family:'Inter',sans-serif;
-	background:#030303;
-	color:white;
-	overflow-x:hidden;
-}
+        .hero-title {
+            font-size: clamp(6rem, 14vw, 13rem);
+            line-height: 0.78;
+            letter-spacing: -0.08em;
+        }
 
-#starfield{
-	position:fixed;
-	inset:0;
-	z-index:-3;
-}
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
 
-.aurora{
-	position:fixed;
-	width:900px;
-	height:900px;
-	border-radius:50%;
-	filter:blur(140px);
-	opacity:.22;
-	z-index:-2;
-	animation:float 25s ease-in-out infinite alternate;
-}
+        .glass-card:hover {
+            transform: translateY(-28px) scale(1.03);
+            border-color: rgba(103, 232, 249, 0.3);
+            box-shadow: 0 40px 70px -12px rgb(103 232 249 / 0.15);
+        }
 
-.aurora.a{
-	background:rgb(34 211 238);
-	top:-250px;
-	left:-250px;
-}
+        .emoji {
+            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .glass-card:hover .emoji {
+            transform: scale(1.18) rotate(8deg);
+        }
 
-.aurora.b{
-	background:rgb(168 85 247);
-	right:-250px;
-	bottom:-250px;
-	animation-delay:-10s;
-}
-
-@keyframes float{
-	from{
-		transform:translate(0,0);
-	}
-	to{
-		transform:translate(120px,-80px);
-	}
-}
-
-.glass{
-	background:rgba(255,255,255,.03);
-	backdrop-filter:blur(20px);
-	border:1px solid rgba(255,255,255,.08);
-}
-
-.asset-card{
-	min-width:420px;
-	height:500px;
-
-	border-radius:32px;
-
-	background:
-	linear-gradient(
-		180deg,
-		rgba(255,255,255,.04),
-		rgba(255,255,255,.015)
-	);
-
-	border:1px solid rgba(255,255,255,.08);
-
-	backdrop-filter:blur(20px);
-
-	position:relative;
-
-	overflow:hidden;
-
-	transition:
-		transform .6s cubic-bezier(.22,1,.36,1),
-		border-color .6s ease;
-}
-
-.asset-card:hover{
-	border-color:rgba(255,255,255,.18);
-	transform:translateY(-10px);
-}
-
-.asset-icon{
-	font-size:8rem;
-	opacity:.07;
-	position:absolute;
-	right:40px;
-	top:40px;
-}
-
-.asset-card::before{
-	content:'';
-
-	position:absolute;
-
-	inset:0;
-
-	background:
-	radial-gradient(
-		circle at top left,
-		rgba(255,255,255,.07),
-		transparent 50%
-	);
-
-	opacity:0;
-
-	transition:.5s;
-}
-
-.asset-card:hover::before{
-	opacity:1;
-}
-
-.scroll-row{
-	scrollbar-width:none;
-}
-
-.scroll-row::-webkit-scrollbar{
-	display:none;
-}
-
-.hero-title{
-	font-size:clamp(5rem,14vw,12rem);
-	line-height:.9;
-	letter-spacing:-.08em;
-	font-weight:600;
-}
-
-.live-pill{
-	background:rgba(255,255,255,.05);
-	border:1px solid rgba(255,255,255,.08);
-	backdrop-filter:blur(15px);
-}
-
-.nav-button{
-	width:56px;
-	height:56px;
-	border-radius:16px;
-
-	background:rgba(255,255,255,.03);
-
-	border:1px solid rgba(255,255,255,.08);
-
-	transition:.3s;
-}
-
-.nav-button:hover{
-	transform:translateY(-2px);
-	border-color:rgba(255,255,255,.25);
-}
-
-.dot{
-	width:10px;
-	height:10px;
-	border-radius:999px;
-	background:rgba(255,255,255,.25);
-	transition:.4s;
-}
-
-.dot.active{
-	width:34px;
-	background:white;
-}
-
-header{
-	backdrop-filter:blur(20px);
-}
-
-</style>
+        .slider {
+            scrollbar-width: none;
+        }
+        .slider::-webkit-scrollbar { display: none; }
+    </style>
 </head>
-
-<body>
-
-<canvas id="starfield"></canvas>
-
-<div class="aurora a"></div>
-<div class="aurora b"></div>
-
-<header class="fixed top-0 left-0 right-0 z-50 px-10 py-8 flex justify-between items-center">
-
-<div class="flex items-center gap-3">
-	<div class="w-3 h-3 rounded-full bg-cyan-300"></div>
-	<div class="tracking-tight text-xl font-medium">
-		UNPRINCIPLED
-	</div>
-</div>
-
-<div class="text-xs uppercase tracking-[.4em] text-white/50">
-	Assets
-</div>
-
-</header>
-
-<section class="min-h-screen flex flex-col justify-center">
-
-<div class="text-center px-8">
-
-<div class="inline-flex items-center gap-3 px-5 py-3 rounded-full live-pill">
-
-<div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-
-<div class="uppercase text-[11px] tracking-[.25em]">
-	Live Collection
-</div>
-
-</div>
-
-<h1 class="hero-title mt-8">
-	ASSETS
-</h1>
-
-<p class="mt-6 text-white/50 max-w-md mx-auto text-lg">
-	Real. Growing. Yours.
-</p>
-
-</div>
-
-<div class="mt-20">
-
-<div
-	id="slider"
-	class="scroll-row flex gap-8 overflow-x-auto px-12 pb-12">
-
-	<div class="asset-card">
-
-		<i class="fa-solid fa-fish asset-icon"></i>
-
-		<div class="absolute bottom-10 left-10">
-
-			<div class="uppercase tracking-[.25em] text-cyan-300 text-xs">
-				AQUATICS
-			</div>
-
-			<h2 class="text-5xl font-semibold mt-3">
-				Living Waters
-			</h2>
-
-			<p class="mt-5 text-white/50 max-w-xs">
-				Breeding programs, guppies,
-				bettas, shrimp and aquascapes.
-			</p>
-
-		</div>
-
-	</div>
-
-	<div class="asset-card">
-
-		<i class="fa-solid fa-leaf asset-icon"></i>
-
-		<div class="absolute bottom-10 left-10">
-
-			<div class="uppercase tracking-[.25em] text-emerald-300 text-xs">
-				NURSERY
-			</div>
-
-			<h2 class="text-5xl font-semibold mt-3">
-				Living Earth
-			</h2>
-
-			<p class="mt-5 text-white/50 max-w-xs">
-				Rare plants, propagation and
-				beautiful collections.
-			</p>
-
-		</div>
-
-	</div>
-
-	<div class="asset-card">
-
-		<i class="fa-solid fa-palette asset-icon"></i>
-
-		<div class="absolute bottom-10 left-10">
-
-			<div class="uppercase tracking-[.25em] text-purple-300 text-xs">
-				ART
-			</div>
-
-			<h2 class="text-5xl font-semibold mt-3">
-				Timeless Creations
-			</h2>
-
-			<p class="mt-5 text-white/50 max-w-xs">
-				Digital, physical, generative and
-				music collections.
-			</p>
-
-		</div>
-
-	</div>
-
-</div>
-
-</div>
-
-</section>
-
-<script>
-
-const canvas=document.getElementById('starfield');
-const ctx=canvas.getContext('2d');
-
-let stars=[];
-
-function resize(){
-
-	canvas.width=window.innerWidth;
-	canvas.height=window.innerHeight;
-
-	stars=[];
-
-	for(let i=0;i<500;i++){
-
-		stars.push({
-
-			x:Math.random()*canvas.width,
-			y:Math.random()*canvas.height,
-
-			r:Math.random()*2,
-
-			v:Math.random()*0.2+0.05
-
-		});
-	}
-}
-
-resize();
-
-window.addEventListener('resize',resize);
-
-function animate(){
-
-	ctx.clearRect(
-		0,
-		0,
-		canvas.width,
-		canvas.height
-	);
-
-	for(const s of stars){
-
-		s.y+=s.v;
-
-		if(s.y>canvas.height){
-
-			s.y=0;
-			s.x=Math.random()*canvas.width;
-		}
-
-		ctx.beginPath();
-
-		ctx.arc(
-			s.x,
-			s.y,
-			s.r,
-			0,
-			Math.PI*2
-		);
-
-		ctx.fillStyle='rgba(255,255,255,.8)';
-		ctx.fill();
-	}
-
-	requestAnimationFrame(animate);
-}
-
-animate();
-
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
-
+<body class="bg-black text-white overflow-hidden">
+    <!-- Premium Starfield -->
+    <div class="star-bg">
+        <div class="stars"></div>
+        <div class="nebula top-[-300px] left-[-200px]"></div>
+        <div class="nebula bottom-[-400px] right-[-300px]" 
+             style="background: radial-gradient(circle, rgba(165, 243, 252, 0.13) 0%, transparent 70%); animation-delay: -45s;"></div>
+    </div>
+
+    <div class="min-h-screen flex flex-col relative z-10">
+        <!-- Ultra-minimal header -->
+        <header class="fixed top-0 left-0 right-0 z-50 px-8 py-8 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-5 h-5 border border-cyan-300 rounded-full flex items-center justify-center text-[10px] font-bold">U</div>
+                <span class="title-font text-lg tracking-tighter">UNPRINCIPLED</span>
+            </div>
+            <div class="text-xs tracking-[4px] font-medium text-cyan-300">ASSETS</div>
+        </header>
+
+        <!-- Hero -->
+        <div class="flex-1 flex items-center justify-center pt-10">
+            <div class="text-center">
+                <div class="inline-flex items-center gap-2 px-6 py-2.5 rounded-3xl border border-white/10 bg-white/5 text-xs tracking-[2px] mb-8">
+                    <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                    LIVE • VERIFIED • EXPANDING
+                </div>
+                
+                <h1 class="title-font hero-title font-semibold tracking-[-4px] text-white leading-none">
+                    ASSETS
+                </h1>
+                
+                <p class="mt-4 text-xl text-white/60 max-w-md mx-auto">
+                    Three living universes of real value
+                </p>
+            </div>
+        </div>
+
+        <!-- Premium Slider -->
+        <div class="px-8 pb-16">
+            <div id="slider" 
+                 class="slider flex gap-8 overflow-x-auto snap-x snap-mandatory pb-10 scroll-smooth">
+                
+                <!-- Aquatics -->
+                <div onclick="goToSlide(0)" 
+                     class="glass-card min-w-[420px] h-[500px] rounded-3xl overflow-hidden relative cursor-pointer snap-center group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-[170px] emoji">🐠</div>
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-9">
+                        <div class="uppercase text-cyan-400 text-xs tracking-[3px] mb-1">01 — AQUATICS</div>
+                        <div class="text-4xl title-font font-semibold tracking-tight">Living Waters</div>
+                        <p class="mt-3 text-white/70 text-[15.5px]">Breeding sanctuaries for guppies, bettas, shrimp, and rare aquascapes.</p>
+                    </div>
+                    
+                    <div class="absolute top-8 right-8 px-5 py-2 text-xs font-mono bg-black/40 backdrop-blur-md border border-cyan-400/30 rounded-2xl">
+                        2,847 specimens
+                    </div>
+                </div>
+
+                <!-- Nursery -->
+                <div onclick="goToSlide(1)" 
+                     class="glass-card min-w-[420px] h-[500px] rounded-3xl overflow-hidden relative cursor-pointer snap-center group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-[170px] emoji">🌿</div>
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-9">
+                        <div class="uppercase text-emerald-400 text-xs tracking-[3px] mb-1">02 — NURSERY</div>
+                        <div class="text-4xl title-font font-semibold tracking-tight">Living Earth</div>
+                        <p class="mt-3 text-white/70 text-[15.5px]">Rare plants, propagation programs, and future forests in motion.</p>
+                    </div>
+                    
+                    <div class="absolute top-8 right-8 px-5 py-2 text-xs font-mono bg-black/40 backdrop-blur-md border border-emerald-400/30 rounded-2xl">
+                        1,920 plants
+                    </div>
+                </div>
+
+                <!-- Art -->
+                <div onclick="goToSlide(2)" 
+                     class="glass-card min-w-[420px] h-[500px] rounded-3xl overflow-hidden relative cursor-pointer snap-center group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-[170px] emoji">✦</div>
+                    
+                    <div class="absolute bottom-0 left-0 right-0 p-9">
+                        <div class="uppercase text-purple-400 text-xs tracking-[3px] mb-1">03 — ART &amp; CULTURE</div>
+                        <div class="text-4xl title-font font-semibold tracking-tight">Timeless Value</div>
+                        <p class="mt-3 text-white/70 text-[15.5px]">Digital, physical, and sonic works of enduring beauty.</p>
+                    </div>
+                    
+                    <div class="absolute top-8 right-8 px-5 py-2 text-xs font-mono bg-black/40 backdrop-blur-md border border-purple-400/30 rounded-2xl">
+                        127 works
+                    </div>
+                </div>
+            </div>
+
+            <!-- Elegant controls -->
+            <div class="flex items-center justify-center gap-12 text-sm">
+                <button onclick="prevSlide()" 
+                        class="flex items-center gap-4 group text-white/60 hover:text-white transition-colors">
+                    <div class="w-12 h-px bg-white/30 group-hover:bg-white transition-colors"></div>
+                    <span class="uppercase tracking-widest text-xs">Prev</span>
+                </button>
+
+                <div class="flex gap-3">
+                    <button onclick="goToSlide(0)" id="dot-0" class="w-3 h-3 rounded-full bg-cyan-300 transition-all"></button>
+                    <button onclick="goToSlide(1)" id="dot-1" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-all"></button>
+                    <button onclick="goToSlide(2)" id="dot-2" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-all"></button>
+                </div>
+
+                <button onclick="nextSlide()" 
+                        class="flex items-center gap-4 group text-white/60 hover:text-white transition-colors">
+                    <span class="uppercase tracking-widest text-xs">Next</span>
+                    <div class="w-12 h-px bg-white/30 group-hover:bg-white transition-colors"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        let currentIndex = 0;
+        const cardWidth = 428; // 420px card + 8px gap
+
+        function updateDots() {
+            for (let i = 0; i < 3; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (i === currentIndex) {
+                    dot.classList.add('bg-cyan-300', 'scale-125');
+                    dot.classList.remove('bg-white/30');
+                } else {
+                    dot.classList.remove('bg-cyan-300', 'scale-125');
+                    dot.classList.add('bg-white/30');
+                }
+            }
+        }
+
+        function goToSlide(index) {
+            currentIndex = index;
+            slider.scrollTo({
+                left: currentIndex * cardWidth,
+                behavior: 'smooth'
+            });
+            updateDots();
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % 3;
+            goToSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + 3) % 3;
+            goToSlide(currentIndex);
+        }
+
+        // Auto-advance with smooth feel
+        let autoplay;
+        function startAutoplay() {
+            autoplay = setInterval(nextSlide, 6200);
+        }
+
+        window.onload = () => {
+            updateDots();
+            startAutoplay();
+
+            slider.addEventListener('mouseenter', () => clearInterval(autoplay));
+            slider.addEventListener('mouseleave', startAutoplay);
+
+            // Keyboard
+            document.addEventListener('keydown', e => {
+                if (e.key === 'ArrowRight') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+            });
+
+            console.log('%c🚀 Premium ASSETS experience loaded — designed to impress', 'color:#67e8f9; font-size:13px; font-family:monospace');
+        };
+    </script>
 </body>
 </html>
