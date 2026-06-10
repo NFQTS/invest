@@ -3,129 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UNPRINCIPLED - Sustainable Asset Network</title>
+<title>UNPRINCIPLED — ASSETS</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-	font-family:Inter,sans-serif;
-	background:#040507;
-	color:white;
-	overflow:hidden;
-}
-canvas{
-	position:fixed;
-	inset:0;
-	z-index:-3;
-}
-.aurora{
-	position:fixed;
-	width:900px;
-	height:900px;
-	border-radius:50%;
-	filter:blur(140px);
-	opacity:.12;
-	z-index:-2;
-	animation:drift 20s ease-in-out infinite alternate;
-}
-.aqua{background:#22d3ee;top:-250px;left:-250px;}
-.purple{background:#a855f7;bottom:-250px;right:-250px;}
-@keyframes drift{
-	from{transform:translate(0,0)}
-	to{transform:translate(120px,-80px)}
-}
-.hero{
-	height:100vh;
-	display:flex;
-	flex-direction:column;
-	align-items:center;
-	justify-content:center;
-	position:relative;
-}
-.brand{
-	position:absolute;
-	top:40px;
-	left:50%;
-	transform:translateX(-50%);
-	text-align:center;
-}
-.brand h1{
-	font-size:14px;
-	letter-spacing:.5em;
-	font-weight:600;
-}
-.brand p{
-	color:rgba(255,255,255,.55);
-	margin-top:12px;
-}
-svg{
-	width:min(1000px,90vw);
-	height:600px;
-}
-.line{
-	stroke:rgba(255,255,255,.12);
-	stroke-width:2;
-}
-.node{
-	cursor:pointer;
-	filter:drop-shadow(0 0 30px currentColor);
-	animation:pulse 5s ease-in-out infinite;
-}
-@keyframes pulse{
-	50%{transform:scale(1.08)}
-}
-.label{
-	fill:white;
-	font-size:16px;
-	font-weight:600;
-	text-anchor:middle;
-}
-.growth{
-	fill:rgba(255,255,255,.6);
-	font-size:14px;
-	text-anchor:middle;
-}
-.modal{
-	position:fixed;
-	pointer-events:none;
-	opacity:0;
-	transform:translateY(10px);
-	transition:.25s;
-	width:320px;
-	padding:24px;
-	background:rgba(255,255,255,.06);
-	backdrop-filter:blur(24px);
-	border:1px solid rgba(255,255,255,.1);
-	border-radius:24px;
-	box-shadow:0 20px 80px rgba(0,0,0,.5);
-}
-.modal.show{
-	opacity:1;
-	transform:translateY(0);
-}
-.modal h3{
-	margin-bottom:12px;
-}
-.modal ul{
-	padding-left:18px;
-	color:rgba(255,255,255,.8);
-	line-height:1.7;
-}
-.footer{
-	position:absolute;
-	bottom:40px;
-	left:50%;
-	transform:translateX(-50%);
-	text-align:center;
-}
-.footer h2{
-	font-size:30px;
-	font-weight:600;
-	margin-bottom:12px;
-}
-.footer p{
-	color:rgba(255,255,255,.55);
-}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+        font-family:Inter,sans-serif;
+        background:#040507;
+        color:white;
+        overflow:hidden;
+    }
+    canvas{
+        position:fixed;
+        inset:0;
+        z-index:-3;
+    }
+    .aurora{
+        position:fixed;
+        width:1100px;
+        height:1100px;
+        border-radius:50%;
+        filter:blur(160px);
+        opacity:.11;
+        z-index:-2;
+        animation:drift 28s ease-in-out infinite alternate;
+    }
+    .aqua{background:#22d3ee;top:-300px;left:-300px;}
+    .purple{background:#a855f7;bottom:-280px;right:-280px;}
+    @keyframes drift{
+        from{transform:translate(0,0)}
+        to{transform:translate(140px,-100px)}
+    }
+    .hero{
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        position:relative;
+    }
+    .brand{
+        position:absolute;
+        top:48px;
+        left:50%;
+        transform:translateX(-50%);
+        text-align:center;
+    }
+    .brand h1{
+        font-size:15px;
+        letter-spacing:.6em;
+        font-weight:700;
+        opacity:0.95;
+    }
+    .brand p{
+        color:rgba(255,255,255,.5);
+        margin-top:8px;
+        font-size:13px;
+        letter-spacing:2px;
+    }
+    svg{
+        width:min(1100px,92vw);
+        height:620px;
+    }
+    .line{
+        stroke:rgba(255,255,255,.09);
+        stroke-width:2.5;
+    }
+    .node{
+        cursor:pointer;
+        filter:drop-shadow(0 0 40px currentColor);
+        transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    .node:hover{
+        transform:scale(1.12);
+    }
+    .label{
+        fill:white;
+        font-size:17px;
+        font-weight:700;
+        text-anchor:middle;
+        letter-spacing:1px;
+    }
+    .metric{
+        fill:rgba(255,255,255,.75);
+        font-size:13.5px;
+        text-anchor:middle;
+    }
+    .modal{
+        position:fixed;
+        pointer-events:none;
+        opacity:0;
+        transform:translateY(12px);
+        transition:.3s cubic-bezier(0.23,1,0.32,1);
+        width:340px;
+        padding:28px;
+        background:rgba(15,23,42,0.75);
+        backdrop-filter:blur(32px);
+        border:1px solid rgba(255,255,255,0.1);
+        border-radius:28px;
+        box-shadow:0 30px 90px rgba(0,0,0,.6);
+    }
+    .modal.show{
+        opacity:1;
+        transform:translateY(0);
+    }
+    .modal h3{
+        margin-bottom:16px;
+        font-size:22px;
+    }
+    .modal ul{
+        list-style:none;
+        padding:0;
+    }
+    .modal li{
+        padding:9px 0;
+        border-bottom:1px solid rgba(255,255,255,.08);
+        color:rgba(255,255,255,.85);
+        display:flex;
+        justify-content:space-between;
+    }
+    .modal li:last-child{border:none;}
+    .modal .value{
+        color:#67e8f9;
+        font-weight:500;
+    }
+    .footer{
+        position:absolute;
+        bottom:48px;
+        left:50%;
+        transform:translateX(-50%);
+        text-align:center;
+        font-size:14px;
+        color:rgba(255,255,255,.55);
+    }
 </style>
 </head>
 <body>
@@ -135,97 +145,115 @@ svg{
 <div class="aurora purple"></div>
 
 <div class="hero">
-	<div class="brand">
-		<h1>UNPRINCIPLED INC</h1>
-		<p>Sustainable Asset Network</p>
-	</div>
+    <div class="brand">
+        <h1>UNPRINCIPLED</h1>
+        <p>SUSTAINABLE ASSET NETWORK</p>
+    </div>
 
-	<svg viewBox="0 0 1000 600">
-		<line class="line" x1="220" y1="400" x2="500" y2="170"/>
-		<line class="line" x1="500" y1="170" x2="780" y2="400"/>
-		<line class="line" x1="220" y1="400" x2="780" y2="400"/>
+    <svg viewBox="0 0 1100 620" id="network">
+        <!-- Connecting lines -->
+        <line class="line" x1="260" y1="420" x2="550" y2="180"/>
+        <line class="line" x1="550" y1="180" x2="840" y2="420"/>
+        <line class="line" x1="260" y1="420" x2="840" y2="420"/>
 
-		<g class="asset" data-title="Aquatics" data-color="#22d3ee"
-		data-items="Breeding Programs|Rare Guppy Lines|Endler Development|Shrimp Colonies|Aquascaping Projects|More Details Coming Soon">
-			<circle class="node" cx="220" cy="400" r="55" fill="#22d3ee"/>
-			<text class="label" x="220" y="490">AQUATICS</text>
-			<text class="growth" x="220" y="515">-12%</text>
-		</g>
+        <!-- Aquatics -->
+        <g class="asset" data-title="Aquatics" data-color="#22d3ee"
+           data-metrics='{"Indoor Tank Space":"1,840 gallons","Outdoor Pond Space":"4,200 gallons","Species Count":"47"}'>
+            <circle class="node" cx="260" cy="420" r="68" fill="#22d3ee"/>
+            <text class="label" x="260" y="515">AQUATICS</text>
+            <text class="metric" x="260" y="545">Living Waters</text>
+        </g>
 
-		<g class="asset" data-title="Art" data-color="#a855f7"
-		data-items="Digital Artwork|Physical Artwork|Music Projects|Generative Systems|Creative Research|More Details Coming Soon">
-			<circle class="node" cx="500" cy="170" r="68" fill="#a855f7"/>
-			<text class="label" x="500" y="275">ART</text>
-			<text class="growth" x="500" y="300">+22.7%</text>
-		</g>
+        <!-- Art -->
+        <g class="asset" data-title="Art &amp; Culture" data-color="#c026d3"
+           data-metrics='{"Digital Works":"64","Physical Pieces":"31","Music Catalog":"92 tracks"}'>
+            <circle class="node" cx="550" cy="180" r="78" fill="#c026d3"/>
+            <text class="label" x="550" y="285">ART &amp; CULTURE</text>
+            <text class="metric" x="550" y="315">Timeless Value</text>
+        </g>
 
-		<g class="asset" data-title="Nursery" data-color="#34d399"
-		data-items="Rare Plants|Propagation Programs|Native Species|Indoor Collections|Experimental Crosses|More Details Coming Soon">
-			<circle class="node" cx="780" cy="400" r="42" fill="#34d399"/>
-			<text class="label" x="780" y="490">NURSERY</text>
-			<text class="growth" x="780" y="515">+11.2%</text>
-		</g>
-	</svg>
+        <!-- Nursery -->
+        <g class="asset" data-title="Nursery" data-color="#34d399"
+           data-metrics='{"Indoor Space":"2,940 sq ft","Outdoor Space":"1.8 acres","Species Count":"68"}'>
+            <circle class="node" cx="840" cy="420" r="58" fill="#34d399"/>
+            <text class="label" x="840" y="515">NURSERY</text>
+            <text class="metric" x="840" y="545">Living Earth</text>
+        </g>
+    </svg>
 
-	<div class="footer">
-		<h2>Growth At A Glance</h2>
-		<p>Hover any node to explore the ecosystem.</p>
-	</div>
+    <div class="footer">
+        Hover nodes to explore • Real assets • Real growth
+    </div>
 </div>
 
 <div id="modal" class="modal"></div>
 
 <script>
-const canvas=document.getElementById('stars');
-const ctx=canvas.getContext('2d');
-let stars=[];
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [];
 
-function resize(){
-	canvas.width=innerWidth;
-	canvas.height=innerHeight;
-	stars=[];
-	for(let i=0;i<350;i++){
-		stars.push({
-			x:Math.random()*canvas.width,
-			y:Math.random()*canvas.height,
-			r:Math.random()*2,
-			v:Math.random()*0.3+0.05
-		});
-	}
+function resize() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+    stars = [];
+    for (let i = 0; i < 420; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2.2,
+            v: Math.random() * 0.4 + 0.08
+        });
+    }
 }
 resize();
-addEventListener('resize',resize);
+addEventListener('resize', resize);
 
-function animate(){
-	ctx.clearRect(0,0,canvas.width,canvas.height);
-	for(const s of stars){
-		s.y+=s.v;
-		if(s.y>canvas.height)s.y=0;
-		ctx.beginPath();
-		ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-		ctx.fillStyle='rgba(255,255,255,.8)';
-		ctx.fill();
-	}
-	requestAnimationFrame(animate);
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const s of stars) {
+        s.y += s.v;
+        if (s.y > canvas.height) s.y = 0;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        ctx.fill();
+    }
+    requestAnimationFrame(animate);
 }
 animate();
 
-const modal=document.getElementById('modal');
+// Modal logic
+const modal = document.getElementById('modal');
 
-document.querySelectorAll('.asset').forEach(asset=>{
-	asset.addEventListener('mousemove',e=>{
-		const items=asset.dataset.items.split('|');
-		modal.innerHTML=`
-			<h3 style="color:${asset.dataset.color}">${asset.dataset.title}</h3>
-			<ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul>
-		`;
-		modal.style.left=(e.clientX+20)+'px';
-		modal.style.top=(e.clientY-20)+'px';
-		modal.classList.add('show');
-	});
-	asset.addEventListener('mouseleave',()=>{
-		modal.classList.remove('show');
-	});
+document.querySelectorAll('.asset').forEach(asset => {
+    asset.addEventListener('mousemove', e => {
+        const metrics = JSON.parse(asset.dataset.metrics);
+        let html = `<h3 style="color:${asset.dataset.color}">${asset.dataset.title}</h3><ul>`;
+        
+        Object.keys(metrics).forEach(key => {
+            html += `<li><span>${key}</span><span class="value">${metrics[key]}</span></li>`;
+        });
+        
+        html += `</ul>`;
+        modal.innerHTML = html;
+        
+        modal.style.left = (e.clientX + 28) + 'px';
+        modal.style.top = (e.clientY - 30) + 'px';
+        modal.classList.add('show');
+    });
+    
+    asset.addEventListener('mouseleave', () => {
+        modal.classList.remove('show');
+    });
+});
+
+// Optional: Click to "select"
+document.querySelectorAll('.asset').forEach(asset => {
+    asset.addEventListener('click', () => {
+        asset.style.transform = 'scale(1.3)';
+        setTimeout(() => asset.style.transform = '', 280);
+    });
 });
 </script>
 
