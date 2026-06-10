@@ -3,574 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unprincipled Inc. • Stellar RWAs</title>
+    <title>ASSETS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
-        
-        :root {
-            --accent: #22d3ee;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
         
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        
-        .logo-font {
             font-family: 'Space Grotesk', sans-serif;
         }
 
         .star-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.06) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(34,211,238,0.05) 0%, transparent 60%);
-            z-index: -2;
+            inset: 0;
+            background: #000;
             overflow: hidden;
+            z-index: -2;
         }
 
         .stars {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: transparent;
-            z-index: -1;
-            animation: drift 180s linear infinite;
+            background-image: 
+                radial-gradient(white 1px, transparent 1px),
+                radial-gradient(white 1px, transparent 1px);
+            background-position: 0 0, 40px 40px;
+            background-size: 80px 80px;
+            animation: starDrift 120s linear infinite;
+            opacity: 0.6;
         }
 
-        @keyframes drift {
-            0% { background-position: 0 0; }
-            100% { background-position: 2000px 2000px; }
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 4s infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.3; }
-            100% { opacity: 1; }
+        @keyframes starDrift {
+            from { background-position: 0 0, 40px 40px; }
+            to { background-position: 800px 600px, 840px 640px; }
         }
 
         .nebula {
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(34,211,238,0.12) 0%, transparent 70%);
-            filter: blur(80px);
-            opacity: 0.6;
-            animation: nebula-float 60s ease-in-out infinite;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle at 30% 40%, rgba(34, 211, 238, 0.25) 0%, transparent 60%);
+            filter: blur(120px);
+            animation: nebulaFloat 90s ease-in-out infinite;
         }
 
-        .dashboard-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .slide {
+            transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .slider-container {
+            scroll-behavior: smooth;
+        }
+
+        .category-card {
+            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
         }
         
-        .dashboard-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 0 40px -10px rgb(34 211 238);
+        .category-card:hover {
+            transform: scale(1.04) translateY(-20px);
+            filter: brightness(1.15);
         }
 
-        .gallery-card {
-            transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-        
-        .gallery-card:hover {
-            transform: scale(1.06) rotate(1deg);
-            box-shadow: 0 25px 50px -12px rgb(0 0 0);
-        }
-
-        .glow-text {
-            text-shadow: 0 0 20px rgb(34 211 238);
-        }
-
-        .scanline {
-            position: relative;
-        }
-        
-        .scanline::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                to bottom,
-                transparent 40%,
-                rgba(255,255,255,0.07) 50%,
-                transparent 60%
-            );
-            animation: scan 8s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(400%); }
+        .glow {
+            text-shadow: 
+                0 0 40px rgb(34 211 238),
+                0 0 80px rgb(34 211 238);
         }
     </style>
 </head>
-<body class="bg-black text-white overflow-x-hidden">
-    <!-- Starfield Background -->
+<body class="bg-black text-white overflow-hidden">
+    <!-- Space Background -->
     <div class="star-bg">
-        <div class="stars" id="stars"></div>
-        <div class="nebula" style="top: 15%; left: 10%; animation-delay: 0s;"></div>
-        <div class="nebula" style="top: 45%; right: 15%; background: radial-gradient(circle, rgba(165,243,252,0.15) 0%, transparent 70%); animation-delay: 20s;"></div>
+        <div class="stars"></div>
+        <div class="nebula" style="top: -200px; left: -200px;"></div>
+        <div class="nebula" style="bottom: -300px; right: -100px; background: radial-gradient(circle at 70% 60%, rgba(165, 243, 252, 0.18) 0%, transparent 65%); animation-delay: -35s;"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
-        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-8">
             <div class="flex items-center gap-x-3">
-                <div class="w-8 h-8 bg-cyan-400 rounded-full flex items-center justify-center text-black font-bold text-xl logo-font">U</div>
-                <div>
-                    <span class="logo-font text-2xl font-semibold tracking-tighter">UNPRINCIPLED</span>
-                    <span class="text-xs tracking-[3px] text-cyan-400 block -mt-1">INC.</span>
-                </div>
+                <div class="w-7 h-7 rounded-full bg-cyan-400 flex items-center justify-center text-black text-xl font-bold">U</div>
+                <span class="text-2xl tracking-tighter font-semibold">UNPRINCIPLED</span>
             </div>
-            
-            <div class="flex items-center gap-x-8 text-sm font-medium">
-                <a href="#dashboard" class="hover:text-cyan-400 transition-colors">DASHBOARD</a>
-                <a href="#gallery" class="hover:text-cyan-400 transition-colors">COLLECTION</a>
-                <a href="#mission" class="hover:text-cyan-400 transition-colors">MISSION</a>
-                <button onclick="contactInvestors()" 
-                        class="px-6 py-2.5 bg-white text-black rounded-2xl font-semibold hover:bg-cyan-400 hover:text-black transition-all active:scale-95">
-                    INVEST
-                </button>
-            </div>
-        </div>
-    </nav>
+            <div class="text-sm uppercase tracking-[3px] text-cyan-400 font-medium">ASSETS</div>
+        </header>
 
-    <!-- HERO -->
-    <section class="min-h-screen flex items-center relative pt-20 scanline">
-        <div class="max-w-screen-2xl mx-auto px-8 grid grid-cols-12 gap-12 items-center">
-            <div class="col-span-12 lg:col-span-7">
-                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-3xl mb-6">
+        <!-- Hero Title -->
+        <div class="flex-1 flex items-center justify-center pt-20 relative z-10">
+            <div class="text-center">
+                <div class="inline-flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-3xl mb-6">
                     <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span class="text-xs uppercase tracking-widest font-mono text-emerald-400">LIVE • Q2 2026</span>
+                    <span class="text-xs tracking-widest">LIVE COLLECTION</span>
                 </div>
                 
-                <h1 class="text-7xl lg:text-8xl font-semibold logo-font tracking-tighter leading-none glow-text">
-                    REAL ASSETS.<br>
-                    <span class="bg-gradient-to-r from-cyan-300 via-sky-300 to-emerald-300 bg-clip-text text-transparent">CELESTIAL GROWTH.</span>
+                <h1 class="text-[13vw] leading-none font-bold tracking-[-6px] glow" style="font-size: 13vw;">
+                    ASSETS
                 </h1>
                 
-                <p class="mt-6 max-w-lg text-xl text-gray-300">
-                    Sustainable Real World Assets orbiting a better future. 
-                    Classic cars, thriving ecosystems, living art — tokenized, transparent, and accelerating.
+                <p class="mt-4 text-gray-400 text-xl max-w-md mx-auto">
+                    Real. Growing. Yours.
                 </p>
-                
-                <div class="flex items-center gap-4 mt-10">
-                    <button onclick="document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' })" 
-                            class="px-8 py-5 bg-cyan-400 hover:bg-cyan-300 transition-all text-black font-semibold text-lg rounded-3xl flex items-center gap-x-3 group">
-                        EXPLORE THE COLLECTION
-                        <i class="fa-solid fa-arrow-right group-active:rotate-45 transition-transform"></i>
-                    </button>
-                    <button onclick="contactInvestors()" 
-                            class="px-8 py-5 border border-white/30 hover:border-white/60 transition-all font-medium rounded-3xl">
-                        SPEAK WITH THE TEAM
-                    </button>
-                </div>
-                
-                <div class="mt-12 flex items-center gap-8 text-sm">
-                    <div>
-                        <div class="text-emerald-400 text-3xl font-mono font-semibold" id="total-value">47.8</div>
-                        <div class="text-gray-400">MILLION USD TVL</div>
-                    </div>
-                    <div class="h-9 w-px bg-white/10"></div>
-                    <div>
-                        <div class="text-emerald-400 text-3xl font-mono font-semibold flex items-center gap-1">
-                            1.8k <span class="text-xs text-emerald-400/70">↑12%</span>
-                        </div>
-                        <div class="text-gray-400">TONS CO₂ OFFSET</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Floating Orbital Element -->
-            <div class="col-span-12 lg:col-span-5 relative flex justify-center">
-                <div class="relative w-96 h-96">
-                    <div class="absolute inset-0 border border-cyan-400/30 rounded-full animate-[spin_40s_linear_infinite]"></div>
-                    <div class="absolute inset-8 border border-cyan-400/20 rounded-full animate-[spin_25s_linear_infinite_reverse]"></div>
-                    
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-cyan-300 to-sky-500 rounded-3xl rotate-12 flex items-center justify-center shadow-2xl shadow-cyan-500/50">
-                        <div class="text-center">
-                            <div class="text-black text-5xl font-bold logo-font">RWA</div>
-                            <div class="text-xs tracking-widest text-black/70">ORBIT 004</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Tiny orbiting dots -->
-                    <div class="absolute top-12 left-12 w-4 h-4 bg-white rounded-full animate-[ping_3s_infinite]"></div>
-                    <div class="absolute bottom-20 right-8 w-3 h-3 bg-cyan-300 rounded-full animate-[ping_4s_infinite_1s]"></div>
-                </div>
             </div>
         </div>
-        
-        <div class="absolute bottom-10 left-1/2 flex flex-col items-center">
-            <div class="text-xs tracking-widest text-gray-500 mb-2">SCROLL FOR LIGHTSPEED</div>
-            <i class="fa-solid fa-chevron-down animate-bounce text-cyan-400"></i>
-        </div>
-    </section>
 
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="py-24 border-t border-white/10 bg-black/60">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <span class="px-4 py-1.5 text-xs font-mono tracking-widest bg-white/5 border border-cyan-400/30 rounded-3xl">LIVE METRICS</span>
-                    <h2 class="text-5xl font-semibold logo-font tracking-tight mt-3">Stellar Impact Dashboard</h2>
+        <!-- Creative Slider -->
+        <div class="relative pb-20">
+            <div id="slider" 
+                 class="slider-container flex gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-10 pb-12"
+                 style="scrollbar-width: none; -ms-overflow-style: none;">
+                
+                <!-- Aquatics Slide -->
+                <div onclick="selectSlide(0)" 
+                     class="category-card min-w-[520px] h-[520px] snap-center bg-zinc-950 rounded-3xl overflow-hidden border border-white/10 cursor-pointer group">
+                    <div class="h-full relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/30 to-blue-600/30 group-hover:from-cyan-400/40 transition-all"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-[180px] transition-transform group-hover:scale-110 duration-700">🐠</div>
+                        <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                            <div class="uppercase text-cyan-400 text-sm tracking-widest mb-2">AQUATICS</div>
+                            <div class="text-5xl font-semibold">Living Waters</div>
+                            <div class="mt-4 text-gray-300">Breeding programs • Guppies • Bettas • Shrimp • Snails • Aquascapes</div>
+                        </div>
+                        <div class="absolute top-8 right-8 text-xs px-5 py-2 bg-black/70 backdrop-blur rounded-3xl border border-cyan-400/30">12,400+ specimens</div>
+                    </div>
                 </div>
-                <div class="text-right text-sm text-gray-400">
-                    Updated moments ago • <span class="text-emerald-400 font-mono" id="live-time">04:56 UTC</span>
+
+                <!-- Nursery Slide -->
+                <div onclick="selectSlide(1)" 
+                     class="category-card min-w-[520px] h-[520px] snap-center bg-zinc-950 rounded-3xl overflow-hidden border border-white/10 cursor-pointer group">
+                    <div class="h-full relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-teal-600/30 group-hover:from-emerald-400/40 transition-all"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-[180px] transition-transform group-hover:scale-110 duration-700">🌿</div>
+                        <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                            <div class="uppercase text-emerald-400 text-sm tracking-widest mb-2">NURSERY</div>
+                            <div class="text-5xl font-semibold">Living Earth</div>
+                            <div class="mt-4 text-gray-300">Rare plants • Propagation • Native species • Indoor jungles</div>
+                        </div>
+                        <div class="absolute top-8 right-8 text-xs px-5 py-2 bg-black/70 backdrop-blur rounded-3xl border border-emerald-400/30">2,800+ plants</div>
+                    </div>
+                </div>
+
+                <!-- Art Slide -->
+                <div onclick="selectSlide(2)" 
+                     class="category-card min-w-[520px] h-[520px] snap-center bg-zinc-950 rounded-3xl overflow-hidden border border-white/10 cursor-pointer group">
+                    <div class="h-full relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-600/30 group-hover:from-purple-400/40 transition-all"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-[160px] transition-transform group-hover:scale-110 duration-700">🎨</div>
+                        <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
+                            <div class="uppercase text-purple-400 text-sm tracking-widest mb-2">ART</div>
+                            <div class="text-5xl font-semibold">Timeless Creations</div>
+                            <div class="mt-4 text-gray-300">Digital • Physical • Music • Generative collections</div>
+                        </div>
+                        <div class="absolute top-8 right-8 text-xs px-5 py-2 bg-black/70 backdrop-blur rounded-3xl border border-purple-400/30">87 pieces</div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- KPI 1 -->
-                <div class="dashboard-card bg-zinc-900/70 border border-white/10 rounded-3xl p-8">
-                    <div class="flex justify-between">
-                        <div>
-                            <div class="text-cyan-400 text-sm font-medium flex items-center gap-2">
-                                <i class="fa-solid fa-sack-dollar"></i>
-                                TOTAL PORTFOLIO VALUE
-                            </div>
-                            <div id="kpi-value" class="text-6xl font-mono font-semibold mt-4">$47.82M</div>
-                            <div class="text-emerald-400 text-sm flex items-center gap-1 mt-1">
-                                <i class="fa-solid fa-arrow-trend-up"></i> +2.4% this hour
-                            </div>
-                        </div>
-                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-sky-500 rounded-2xl flex items-center justify-center text-4xl">🚀</div>
-                    </div>
-                    <div class="mt-8 h-2 bg-white/10 rounded-full overflow-hidden">
-                        <div class="h-full w-[83%] bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full"></div>
-                    </div>
+
+            <!-- Slider Controls -->
+            <div class="flex items-center justify-center gap-8 mt-8">
+                <button onclick="prevSlide()" 
+                        class="w-14 h-14 rounded-2xl border border-white/20 hover:border-cyan-400 flex items-center justify-center transition-all active:scale-90">
+                    <i class="fa-solid fa-arrow-left text-xl"></i>
+                </button>
+                
+                <div class="flex gap-3">
+                    <button onclick="goToSlide(0)" id="dot-0"
+                            class="w-4 h-4 rounded-full bg-cyan-400 transition-all"></button>
+                    <button onclick="goToSlide(1)" id="dot-1"
+                            class="w-4 h-4 rounded-full bg-white/30 hover:bg-white/60 transition-all"></button>
+                    <button onclick="goToSlide(2)" id="dot-2"
+                            class="w-4 h-4 rounded-full bg-white/30 hover:bg-white/60 transition-all"></button>
                 </div>
                 
-                <!-- KPI 2 -->
-                <div class="dashboard-card bg-zinc-900/70 border border-white/10 rounded-3xl p-8">
-                    <div class="flex justify-between">
-                        <div>
-                            <div class="text-cyan-400 text-sm font-medium flex items-center gap-2">
-                                <i class="fa-solid fa-leaf"></i>
-                                CARBON SEQUESTERED
-                            </div>
-                            <div id="kpi-carbon" class="text-6xl font-mono font-semibold mt-4">1,847t</div>
-                            <div class="text-emerald-400 text-sm flex items-center gap-1 mt-1">
-                                <i class="fa-solid fa-arrow-trend-up"></i> Equivalent to 410 acres of forest
-                            </div>
-                        </div>
-                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center text-4xl">🌱</div>
-                    </div>
-                </div>
-                
-                <!-- KPI 3 -->
-                <div class="dashboard-card bg-zinc-900/70 border border-white/10 rounded-3xl p-8">
-                    <div class="flex justify-between">
-                        <div>
-                            <div class="text-cyan-400 text-sm font-medium flex items-center gap-2">
-                                <i class="fa-solid fa-fish"></i>
-                                LIVING ASSETS
-                            </div>
-                            <div id="kpi-living" class="text-6xl font-mono font-semibold mt-4">2,394</div>
-                            <div class="text-emerald-400 text-sm flex items-center gap-1 mt-1">
-                                <i class="fa-solid fa-arrow-trend-up"></i> +41 this week
-                            </div>
-                        </div>
-                        <div class="w-16 h-16 bg-gradient-to-br from-sky-400 to-indigo-500 rounded-2xl flex items-center justify-center text-4xl">🐠</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section id="gallery" class="py-24 bg-black">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="flex items-center justify-between mb-12">
-                <h2 class="text-5xl font-semibold logo-font tracking-tighter">Our Growing Constellation</h2>
-                <div class="text-sm text-gray-400 max-w-xs">
-                    Each asset is real, verifiable, and actively contributing to planetary regeneration.
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
-                <!-- Cards populated by JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- CONSTRUCTION NOTICE -->
-    <div class="max-w-screen-2xl mx-auto px-8 py-8 border-t border-b border-white/10 bg-zinc-950/50">
-        <div class="flex items-center gap-4 text-amber-400 text-sm font-medium">
-            <i class="fa-solid fa-hammer"></i>
-            <span>SITE UNDER CONSTRUCTION — We are rapidly onboarding new assets and proof-of-impact documentation. Current view represents live holdings as of June 2026.</span>
-        </div>
-    </div>
-
-    <!-- MISSION -->
-    <section id="mission" class="py-24">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="grid grid-cols-12 gap-12 items-center">
-                <div class="col-span-12 lg:col-span-5">
-                    <div class="sticky top-28">
-                        <span class="text-xs uppercase tracking-[2px] text-cyan-400">WHY WE EXIST</span>
-                        <h2 class="text-6xl font-semibold logo-font tracking-tighter leading-none mt-4">
-                            Ownership that heals the world
-                        </h2>
-                        <p class="mt-8 text-lg text-gray-300">
-                            Unprincipled Inc. acquires, stewards, and tokenizes high-impact real-world assets. 
-                            We believe capital should accelerate biodiversity, culture, and sustainability — not just extract.
-                        </p>
-                        <div class="mt-12 pt-12 border-t border-white/10">
-                            <a href="#" onclick="contactInvestors()" class="inline-flex items-center gap-x-3 group">
-                                <span class="text-xl">Join the mission →</span>
-                                <div class="w-8 h-8 rounded-2xl bg-white/10 group-hover:bg-cyan-400 transition-colors flex items-center justify-center">
-                                    →
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-span-12 lg:col-span-7 space-y-8">
-                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 flex gap-8 items-start">
-                        <div class="text-5xl">🏎️</div>
-                        <div>
-                            <h3 class="font-semibold text-2xl">Project Fleet</h3>
-                            <p class="text-gray-400 mt-2">Restored classics and electric conversions. Each mile driven funds reforestation.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 flex gap-8 items-start">
-                        <div class="text-5xl">🐟</div>
-                        <div>
-                            <h3 class="font-semibold text-2xl">Regenerative Aquariums</h3>
-                            <p class="text-gray-400 mt-2">Breeding programs for endangered species and education. 12,000+ gallons under management.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 flex gap-8 items-start">
-                        <div class="text-5xl">🌿</div>
-                        <div>
-                            <h3 class="font-semibold text-2xl">Living Nursery</h3>
-                            <p class="text-gray-400 mt-2">Rare &amp; native plants. Every token holder receives quarterly propagation credits.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-black border-t border-white/10 py-12">
-        <div class="max-w-screen-2xl mx-auto px-8 text-center text-xs text-gray-500">
-            © 2026 Unprincipled Inc. • Not financial advice. Assets are real. Returns are earned through stewardship.<br>
-            All rights reserved. Built with hope and JavaScript.
-        </div>
-    </footer>
-
-    <!-- Modal -->
-    <div id="asset-modal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-[100]">
-        <div class="max-w-2xl w-full mx-4 bg-zinc-900 rounded-3xl overflow-hidden">
-            <div class="p-8" id="modal-content">
-                <!-- JS injected -->
-            </div>
-            <div class="border-t border-white/10 p-4 flex justify-end">
-                <button onclick="closeModal()" 
-                        class="px-8 py-3 text-sm font-medium hover:bg-white/10 rounded-2xl transition-colors">
-                    CLOSE WINDOW
+                <button onclick="nextSlide()" 
+                        class="w-14 h-14 rounded-2xl border border-white/20 hover:border-cyan-400 flex items-center justify-center transition-all active:scale-90">
+                    <i class="fa-solid fa-arrow-right text-xl"></i>
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Tailwind script already loaded via CDN
-        
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 280; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                const size = Math.random() * 3 + 0.8;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `-${Math.random() * 4}s`;
-                starsContainer.appendChild(star);
+        const slider = document.getElementById('slider');
+        let currentIndex = 0;
+        const slideWidth = 528; // card width + gap
+
+        function updateDots() {
+            for (let i = 0; i < 3; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (i === currentIndex) {
+                    dot.classList.add('bg-cyan-400', 'scale-125');
+                    dot.classList.remove('bg-white/30');
+                } else {
+                    dot.classList.remove('bg-cyan-400', 'scale-125');
+                    dot.classList.add('bg-white/30');
+                }
             }
         }
-        
-        // Fake real-time updates
-        function updateKPIs() {
-            let value = 47.82;
-            let carbon = 1847;
-            let living = 2394;
-            
-            setInterval(() => {
-                value += (Math.random() * 0.08);
-                carbon += Math.floor(Math.random() * 3);
-                living += Math.random() > 0.7 ? 1 : 0;
-                
-                document.getElementById('kpi-value').textContent = '$' + value.toFixed(2) + 'M';
-                document.getElementById('kpi-carbon').textContent = carbon + 't';
-                document.getElementById('kpi-living').textContent = living;
-            }, 3400);
-        }
-        
-        // Live clock
-        function liveClock() {
-            setInterval(() => {
-                const timeEl = document.getElementById('live-time');
-                const now = new Date();
-                let hours = now.getUTCHours().toString().padStart(2, '0');
-                let minutes = now.getUTCMinutes().toString().padStart(2, '0');
-                timeEl.textContent = `${hours}:${minutes} UTC`;
-            }, 30000);
-        }
-        
-        const assets = [
-            {
-                title: "Project Fleet",
-                emoji: "🏎️",
-                desc: "1969 Mustang Mach 1 • 1978 Chevy K10 • 4 more classics in restoration",
-                impact: "Carbon negative through tree planting per mile driven",
-                color: "from-orange-400 to-red-500"
-            },
-            {
-                title: "Aquarium Constellation",
-                emoji: "🐠",
-                desc: "42 breeding tanks • Guppies, Betta splendens, Neocaridina shrimp, Mystery snails &amp; more",
-                impact: "Supporting biodiversity &amp; STEM education programs",
-                color: "from-sky-400 to-cyan-400"
-            },
-            {
-                title: "Plant Nursery",
-                emoji: "🌱",
-                desc: "Monstera, Fiddle Leaf, Rare Hoyas, Native Oaks, Succulents &amp; edibles",
-                impact: "1,200+ plants propagated for token holders this quarter",
-                color: "from-emerald-400 to-teal-500"
-            },
-            {
-                title: "Music Catalog",
-                emoji: "🎵",
-                desc: "Independent artists • 87 mastered tracks • Royalty-bearing NFTs",
-                impact: "Direct artist funding + carbon offset per stream",
-                color: "from-purple-400 to-violet-500"
-            },
-            {
-                title: "Digital + Physical Art",
-                emoji: "🖼️",
-                desc: "Limited edition prints tied to physical originals • Generative series",
-                impact: "Supporting 14 emerging artists globally",
-                color: "from-rose-400 to-pink-500"
-            }
-        ];
-        
-        function renderGallery() {
-            const container = document.getElementById('gallery-grid');
-            container.innerHTML = '';
-            
-            assets.forEach((asset, index) => {
-                const card = document.createElement('div');
-                card.className = `gallery-card group bg-zinc-900/80 border border-white/10 rounded-3xl overflow-hidden cursor-pointer`;
-                card.innerHTML = `
-                    <div class="h-64 bg-gradient-to-br ${asset.color} flex items-center justify-center text-8xl relative">
-                        <div class="absolute inset-0 bg-[radial-gradient(#fff_0.8px,transparent_1px)] [background-size:20px_20px] opacity-10"></div>
-                        ${asset.emoji}
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-semibold">${asset.title}</h3>
-                        <p class="text-gray-400 mt-3 text-[15px]">${asset.desc}</p>
-                        <div class="mt-6 text-xs flex items-center gap-2 text-emerald-400">
-                            <i class="fa-solid fa-seedling"></i>
-                            <span>${asset.impact}</span>
-                        </div>
-                    </div>
-                `;
-                card.onclick = () => showAssetModal(asset);
-                container.appendChild(card);
+
+        function goToSlide(index) {
+            currentIndex = index;
+            slider.scrollTo({
+                left: currentIndex * slideWidth,
+                behavior: 'smooth'
             });
+            updateDots();
         }
-        
-        function showAssetModal(asset) {
-            const modal = document.getElementById('asset-modal');
-            const content = document.getElementById('modal-content');
-            
-            content.innerHTML = `
-                <div class="flex items-center gap-6">
-                    <div class="w-24 h-24 bg-gradient-to-br ${asset.color} rounded-3xl flex items-center justify-center text-7xl flex-shrink-0">
-                        ${asset.emoji}
-                    </div>
-                    <div>
-                        <h2 class="text-4xl font-semibold logo-font">${asset.title}</h2>
-                        <p class="text-cyan-400 text-sm mt-1">LIVE COLLECTION • VERIFIED</p>
-                    </div>
-                </div>
-                <p class="mt-8 text-lg leading-relaxed">${asset.desc}</p>
-                <div class="mt-10 grid grid-cols-2 gap-6">
-                    <div class="bg-black/40 rounded-2xl p-6">
-                        <div class="uppercase text-xs tracking-widest text-gray-400">Current Valuation</div>
-                        <div class="text-4xl font-mono mt-3">Est. $8.4M</div>
-                    </div>
-                    <div class="bg-black/40 rounded-2xl p-6">
-                        <div class="uppercase text-xs tracking-widest text-gray-400">Impact Score</div>
-                        <div class="text-4xl font-mono mt-3 text-emerald-400">94.8<span class="text-base">/100</span></div>
-                    </div>
-                </div>
-                <div class="mt-8 text-xs text-gray-400 border-l-2 border-cyan-400 pl-4">
-                    Documentation, chain-of-custody, and third-party audits available upon accredited investor request.
-                </div>
-            `;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % 3;
+            goToSlide(currentIndex);
         }
-        
-        function closeModal() {
-            const modal = document.getElementById('asset-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + 3) % 3;
+            goToSlide(currentIndex);
         }
-        
-        function contactInvestors() {
-            alert("Thank you. A member of the Unprincipled team will reach out within 48 hours.\n\n(Real contact form coming soon — this is a demo landing page)");
+
+        function selectSlide(index) {
+            goToSlide(index);
+            // Satisfying pulse on click
+            const cards = document.querySelectorAll('.category-card');
+            cards[index].style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                cards[index].style.transform = 'scale(1)';
+            }, 180);
         }
-        
-        // Keyboard escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
-                const modal = document.getElementById('asset-modal');
-                if (!modal.classList.contains('hidden')) closeModal();
-            }
+
+        // Auto-advance (addictive feel)
+        let autoInterval;
+        function startAutoPlay() {
+            autoInterval = setInterval(() => {
+                nextSlide();
+            }, 5200);
+        }
+
+        // Pause on hover
+        slider.addEventListener('mouseenter', () => clearInterval(autoInterval));
+        slider.addEventListener('mouseleave', startAutoPlay);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
         });
-        
-        // Initialize everything
-        window.onload = function() {
-            createStars();
-            renderGallery();
-            updateKPIs();
-            liveClock();
+
+        // Initialize
+        window.onload = () => {
+            updateDots();
+            startAutoPlay();
             
-            // Occasional total value pulse
-            setInterval(() => {
-                const total = document.getElementById('total-value');
-                total.style.transition = 'all 0.6s';
-                total.style.transform = 'scale(1.15)';
-                setTimeout(() => total.style.transform = 'scale(1)', 600);
-            }, 8000);
-            
-            console.log('%c🚀 Unprincipled Inc. Landing Page Ready for Investors', 'color:#67e8f9; font-family:monospace');
+            // Make scroll snap feel premium
+            console.log('%c✦ ASSETS landing page ready — enjoy the ride', 'color:#67e8f9; font-family:monospace');
         };
     </script>
 </body>
