@@ -1,260 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UNPRINCIPLED — ASSETS</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Asset Network</title>
+
 <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-        font-family:Inter,sans-serif;
-        background:#040507;
-        color:white;
-        overflow:hidden;
-    }
-    canvas{
-        position:fixed;
-        inset:0;
-        z-index:-3;
-    }
-    .aurora{
-        position:fixed;
-        width:1100px;
-        height:1100px;
-        border-radius:50%;
-        filter:blur(160px);
-        opacity:.11;
-        z-index:-2;
-        animation:drift 28s ease-in-out infinite alternate;
-    }
-    .aqua{background:#22d3ee;top:-300px;left:-300px;}
-    .purple{background:#a855f7;bottom:-280px;right:-280px;}
-    @keyframes drift{
-        from{transform:translate(0,0)}
-        to{transform:translate(140px,-100px)}
-    }
-    .hero{
-        height:100vh;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        position:relative;
-    }
-    .brand{
-        position:absolute;
-        top:48px;
-        left:50%;
-        transform:translateX(-50%);
-        text-align:center;
-    }
-    .brand h1{
-        font-size:15px;
-        letter-spacing:.6em;
-        font-weight:700;
-        opacity:0.95;
-    }
-    .brand p{
-        color:rgba(255,255,255,.5);
-        margin-top:8px;
-        font-size:13px;
-        letter-spacing:2px;
-    }
-    svg{
-        width:min(1100px,92vw);
-        height:620px;
-    }
-    .line{
-        stroke:rgba(255,255,255,.09);
-        stroke-width:2.5;
-    }
-    .node{
-        cursor:pointer;
-        filter:drop-shadow(0 0 40px currentColor);
-        transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
-    }
-    .node:hover{
-        transform:scale(1.12);
-    }
-    .label{
-        fill:white;
-        font-size:17px;
-        font-weight:700;
-        text-anchor:middle;
-        letter-spacing:1px;
-    }
-    .metric{
-        fill:rgba(255,255,255,.75);
-        font-size:13.5px;
-        text-anchor:middle;
-    }
-    .modal{
-        position:fixed;
-        pointer-events:none;
-        opacity:0;
-        transform:translateY(12px);
-        transition:.3s cubic-bezier(0.23,1,0.32,1);
-        width:340px;
-        padding:28px;
-        background:rgba(15,23,42,0.75);
-        backdrop-filter:blur(32px);
-        border:1px solid rgba(255,255,255,0.1);
-        border-radius:28px;
-        box-shadow:0 30px 90px rgba(0,0,0,.6);
-    }
-    .modal.show{
-        opacity:1;
-        transform:translateY(0);
-    }
-    .modal h3{
-        margin-bottom:16px;
-        font-size:22px;
-    }
-    .modal ul{
-        list-style:none;
-        padding:0;
-    }
-    .modal li{
-        padding:9px 0;
-        border-bottom:1px solid rgba(255,255,255,.08);
-        color:rgba(255,255,255,.85);
-        display:flex;
-        justify-content:space-between;
-    }
-    .modal li:last-child{border:none;}
-    .modal .value{
-        color:#67e8f9;
-        font-weight:500;
-    }
-    .footer{
-        position:absolute;
-        bottom:48px;
-        left:50%;
-        transform:translateX(-50%);
-        text-align:center;
-        font-size:14px;
-        color:rgba(255,255,255,.55);
-    }
+	body {
+		margin: 0;
+		background: #0b0f17;
+		font-family: Arial, sans-serif;
+		color: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+	}
+
+	svg {
+		width: 1100px;
+		max-width: 95vw;
+		height: auto;
+	}
+
+	.line {
+		stroke: rgba(255,255,255,0.15);
+		stroke-width: 2;
+	}
+
+	.asset {
+		cursor: pointer;
+	}
+
+	/* image zoom ONLY (clean hover effect) */
+	.asset image {
+		transform-origin: center;
+		transition: transform 0.35s ease, filter 0.35s ease;
+		filter: brightness(1);
+	}
+
+	.asset:hover image {
+		transform: scale(1.08);
+		filter: brightness(1.1);
+	}
+
+	.asset circle {
+		transition: stroke-width 0.25s ease, stroke 0.25s ease;
+	}
+
+	.asset:hover circle {
+		stroke-width: 6;
+	}
+
+	.label {
+		fill: white;
+		font-size: 14px;
+		text-anchor: middle;
+		opacity: 0.8;
+		letter-spacing: 1px;
+		pointer-events: none;
+	}
+
+	.footer {
+		margin-top: 20px;
+		opacity: 0.6;
+		font-size: 13px;
+	}
 </style>
 </head>
+
 <body>
 
-<canvas id="stars"></canvas>
-<div class="aurora aqua"></div>
-<div class="aurora purple"></div>
+<svg viewBox="0 0 1100 620">
 
-<div class="hero">
-    <div class="brand">
-        <h1>UNPRINCIPLED INC</h1>
-        <p>SUSTAINABLE ASSET NETWORK</p>
-    </div>
+	<!-- Connections -->
+	<line class="line" x1="260" y1="420" x2="550" y2="180"/>
+	<line class="line" x1="550" y1="180" x2="840" y2="420"/>
+	<line class="line" x1="260" y1="420" x2="840" y2="420"/>
 
-    <svg viewBox="0 0 1100 620" id="network">
-        <!-- Connecting lines -->
-        <line class="line" x1="260" y1="420" x2="550" y2="180"/>
-        <line class="line" x1="550" y1="180" x2="840" y2="420"/>
-        <line class="line" x1="260" y1="420" x2="840" y2="420"/>
+	<defs>
+		<!-- Clip paths -->
+		<clipPath id="clipAquatics">
+			<circle cx="260" cy="420" r="68"/>
+		</clipPath>
 
-        <!-- Aquatics -->
-        <g class="asset" data-title="Aquatics" data-color="#22d3ee"
-           data-metrics='{"Indoor Tank Space":"1,840 gallons","Outdoor Pond Space":"4,200 gallons","Species Count":"47"}'>
-            <circle class="node" cx="260" cy="420" r="68" fill="#22d3ee"/>
-            <text class="label" x="260" y="515">AQUATICS</text>
-        </g>
+		<clipPath id="clipArt">
+			<circle cx="550" cy="180" r="78"/>
+		</clipPath>
 
-        <!-- Art -->
-        <g class="asset" data-title="Art &amp; Culture" data-color="#c026d3"
-           data-metrics='{"Digital Works Sold": 7, "Music Catalog":"10 tracks"}'>
-            <circle class="node" cx="550" cy="180" r="78" fill="#c026d3"/>
-            <text class="label" x="550" y="285">ART</text>
-            
-        </g>
+		<clipPath id="clipNursery">
+			<circle cx="840" cy="420" r="58"/>
+		</clipPath>
+	</defs>
 
-        <!-- Nursery -->
-        <g class="asset" data-title="Nursery" data-color="#34d399"
-           data-metrics='{"Indoor Space":"2,940 sq ft","Outdoor Space":"1.8 acres","Species Count":"68"}'>
-            <circle class="node" cx="840" cy="420" r="58" fill="#34d399"/>
-            <text class="label" x="840" y="515">NURSERY</text>
+	<!-- AQUATICS -->
+	<g class="asset">
+		<image
+			href="https://images.unsplash.com/photo-1544551763-46a013bb70d5"
+			x="192" y="352" width="136" height="136"
+			clip-path="url(#clipAquatics)"
+			preserveAspectRatio="xMidYMid slice"
+		/>
 
-        </g>
-    </svg>
+		<circle cx="260" cy="420" r="68"
+			fill="none" stroke="#22d3ee" stroke-width="4"/>
 
-    <div class="footer">
-        Hover nodes to explore • Real assets • Real growth
-    </div>
+		<text class="label" x="260" y="515">AQUATICS</text>
+	</g>
+
+	<!-- ART -->
+	<g class="asset">
+		<image
+			href="https://images.unsplash.com/photo-1526498460520-4c246339dccb"
+			x="472" y="102" width="156" height="156"
+			clip-path="url(#clipArt)"
+			preserveAspectRatio="xMidYMid slice"
+		/>
+
+		<circle cx="550" cy="180" r="78"
+			fill="none" stroke="#c026d3" stroke-width="4"/>
+
+		<text class="label" x="550" y="285">ART</text>
+	</g>
+
+	<!-- NURSERY -->
+	<g class="asset">
+		<image
+			href="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735"
+			x="782" y="362" width="116" height="116"
+			clip-path="url(#clipNursery)"
+			preserveAspectRatio="xMidYMid slice"
+		/>
+
+		<circle cx="840" cy="420" r="58"
+			fill="none" stroke="#34d399" stroke-width="4"/>
+
+		<text class="label" x="840" y="515">NURSERY</text>
+	</g>
+
+</svg>
+
+<div class="footer">
+	Hover nodes • Focus zoom selection • Growth-scaled structure
 </div>
-
-<div id="modal" class="modal"></div>
-
-<script>
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-let stars = [];
-
-function resize() {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-    stars = [];
-    for (let i = 0; i < 420; i++) {
-        stars.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            r: Math.random() * 2.2,
-            v: Math.random() * 0.4 + 0.08
-        });
-    }
-}
-resize();
-addEventListener('resize', resize);
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const s of stars) {
-        s.y += s.v;
-        if (s.y > canvas.height) s.y = 0;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255,255,255,0.85)';
-        ctx.fill();
-    }
-    requestAnimationFrame(animate);
-}
-animate();
-
-// Modal logic
-const modal = document.getElementById('modal');
-
-document.querySelectorAll('.asset').forEach(asset => {
-    asset.addEventListener('mousemove', e => {
-        const metrics = JSON.parse(asset.dataset.metrics);
-        let html = `<h3 style="color:${asset.dataset.color}">${asset.dataset.title}</h3><ul>`;
-        
-        Object.keys(metrics).forEach(key => {
-            html += `<li><span>${key}</span><span class="value">${metrics[key]}</span></li>`;
-        });
-        
-        html += `</ul>`;
-        modal.innerHTML = html;
-        
-        modal.style.left = (e.clientX + 28) + 'px';
-        modal.style.top = (e.clientY - 30) + 'px';
-        modal.classList.add('show');
-    });
-    
-    asset.addEventListener('mouseleave', () => {
-        modal.classList.remove('show');
-    });
-});
-
-// Optional: Click to "select"
-document.querySelectorAll('.asset').forEach(asset => {
-    asset.addEventListener('click', () => {
-        asset.style.transform = 'scale(1.3)';
-        setTimeout(() => asset.style.transform = '', 280);
-    });
-});
-</script>
 
 </body>
 </html>
