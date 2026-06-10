@@ -6,143 +6,204 @@
 <title>Asset Network</title>
 
 <style>
-	body {
-		margin: 0;
-		background: #0b0f17;
-		font-family: Arial, sans-serif;
-		color: white;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		min-height: 100vh;
-	}
+    body {
+        margin: 0;
+        background: #0b0f17;
+        font-family: 'Inter', system-ui, sans-serif;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow: hidden;
+    }
 
-	svg {
-		width: 1100px;
-		max-width: 95vw;
-		height: auto;
-	}
+    svg {
+        width: 1100px;
+        max-width: 95vw;
+        height: auto;
+        filter: drop-shadow(0 25px 50px rgba(0,0,0,0.6));
+    }
 
-	.line {
-		stroke: rgba(255,255,255,0.15);
-		stroke-width: 2;
-	}
+    .line {
+        stroke: rgba(255,255,255,0.12);
+        stroke-width: 3;
+        stroke-dasharray: 12 8;
+        animation: dash 8s linear infinite;
+    }
 
-	.asset {
-		cursor: pointer;
-	}
+    @keyframes dash {
+        to { stroke-dashoffset: -40; }
+    }
 
-	/* image zoom ONLY (clean hover effect) */
-	.asset image {
-		transform-origin: center;
-		transition: transform 0.35s ease, filter 0.35s ease;
-		filter: brightness(1);
-	}
+    .asset {
+        cursor: pointer;
+    }
 
-	.asset:hover image {
-		transform: scale(1.08);
-		filter: brightness(1.1);
-	}
+    /* Image container for smooth scaling */
+    .asset-image {
+        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    filter 0.45s ease;
+        transform-origin: center;
+        filter: brightness(0.95) contrast(1.05);
+    }
 
-	.asset circle {
-		transition: stroke-width 0.25s ease, stroke 0.25s ease;
-	}
+    .asset:hover .asset-image {
+        transform: scale(1.12);
+        filter: brightness(1.15) contrast(1.1) saturate(1.3);
+    }
 
-	.asset:hover circle {
-		stroke-width: 6;
-	}
+    /* Pulsing glow ring */
+    .asset-ring {
+        fill: none;
+        stroke-width: 5;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
 
-	.label {
-		fill: white;
-		font-size: 14px;
-		text-anchor: middle;
-		opacity: 0.8;
-		letter-spacing: 1px;
-		pointer-events: none;
-	}
+    .asset:hover .asset-ring {
+        stroke-width: 9;
+        filter: drop-shadow(0 0 18px currentColor);
+    }
 
-	.footer {
-		margin-top: 20px;
-		opacity: 0.6;
-		font-size: 13px;
-	}
+    /* Subtle inner pulse */
+    .asset-pulse {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        opacity: 0.25;
+        animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { r: 72; opacity: 0.15; }
+        50% { r: 82; opacity: 0.35; }
+    }
+
+    .label {
+        fill: #e2e8f0;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 2.5px;
+        text-anchor: middle;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+    }
+
+    .asset:hover .label {
+        fill: white;
+        font-size: 16.5px;
+    }
+
+    .footer {
+        margin-top: 30px;
+        opacity: 0.75;
+        font-size: 13.5px;
+        letter-spacing: 1px;
+        text-align: center;
+        line-height: 1.5;
+    }
+
+    .title {
+        position: absolute;
+        top: 40px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 6px;
+        opacity: 0.9;
+        text-transform: uppercase;
+    }
 </style>
 </head>
 
 <body>
 
-<svg viewBox="0 0 1100 620">
+<div class="title">Asset Network</div>
 
-	<!-- Connections -->
-	<line class="line" x1="260" y1="420" x2="550" y2="180"/>
-	<line class="line" x1="550" y1="180" x2="840" y2="420"/>
-	<line class="line" x1="260" y1="420" x2="840" y2="420"/>
+<svg viewBox="0 0 1100 620" xmlns="http://www.w3.org/2000/svg">
 
-	<defs>
-		<!-- Clip paths -->
-		<clipPath id="clipAquatics">
-			<circle cx="260" cy="420" r="68"/>
-		</clipPath>
+    <!-- Connections -->
+    <line class="line" x1="260" y1="420" x2="550" y2="180"/>
+    <line class="line" x1="550" y1="180" x2="840" y2="420"/>
+    <line class="line" x1="260" y1="420" x2="840" y2="420"/>
 
-		<clipPath id="clipArt">
-			<circle cx="550" cy="180" r="78"/>
-		</clipPath>
+    <defs>
+        <!-- Clip paths -->
+        <clipPath id="clipAquatics">
+            <circle cx="260" cy="420" r="72"/>
+        </clipPath>
 
-		<clipPath id="clipNursery">
-			<circle cx="840" cy="420" r="58"/>
-		</clipPath>
-	</defs>
+        <clipPath id="clipArt">
+            <circle cx="550" cy="180" r="82"/>
+        </clipPath>
 
-	<!-- AQUATICS -->
-	<g class="asset">
-		<image
-			href="https://images.unsplash.com/photo-1544551763-46a013bb70d5"
-			x="192" y="352" width="136" height="136"
-			clip-path="url(#clipAquatics)"
-			preserveAspectRatio="xMidYMid slice"
-		/>
+        <clipPath id="clipNursery">
+            <circle cx="840" cy="420" r="64"/>
+        </clipPath>
+    </defs>
 
-		<circle cx="260" cy="420" r="68"
-			fill="none" stroke="#22d3ee" stroke-width="4"/>
+    <!-- AQUATICS -->
+    <g class="asset">
+        <image 
+            href="https://images.unsplash.com/photo-1544551763-46a013bb70d5" 
+            x="188" y="348" width="144" height="144"
+            clip-path="url(#clipAquatics)"
+            preserveAspectRatio="xMidYMid slice"
+            class="asset-image"
+        />
+        
+        <!-- Main ring -->
+        <circle class="asset-ring" cx="260" cy="420" r="72" stroke="#22d3ee"/>
+        
+        <!-- Pulse ring -->
+        <circle class="asset-pulse" cx="260" cy="420" r="72" stroke="#22d3ee"/>
+        
+        <text class="label" x="260" y="525">AQUATICS</text>
+    </g>
 
-		<text class="label" x="260" y="515">AQUATICS</text>
-	</g>
+    <!-- ART -->
+    <g class="asset">
+        <image 
+            href="https://images.unsplash.com/photo-1549490349-8643362247b5" 
+            x="468" y="98" width="164" height="164"
+            clip-path="url(#clipArt)"
+            preserveAspectRatio="xMidYMid slice"
+            class="asset-image"
+        />
+        
+        <!-- Main ring -->
+        <circle class="asset-ring" cx="550" cy="180" r="82" stroke="#c026d3"/>
+        
+        <!-- Pulse ring -->
+        <circle class="asset-pulse" cx="550" cy="180" r="82" stroke="#c026d3"/>
+        
+        <text class="label" x="550" y="290">ART</text>
+    </g>
 
-	<!-- ART -->
-	<g class="asset">
-		<image
-			href="https://images.unsplash.com/photo-1526498460520-4c246339dccb"
-			x="472" y="102" width="156" height="156"
-			clip-path="url(#clipArt)"
-			preserveAspectRatio="xMidYMid slice"
-		/>
-
-		<circle cx="550" cy="180" r="78"
-			fill="none" stroke="#c026d3" stroke-width="4"/>
-
-		<text class="label" x="550" y="285">ART</text>
-	</g>
-
-	<!-- NURSERY -->
-	<g class="asset">
-		<image
-			href="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735"
-			x="782" y="362" width="116" height="116"
-			clip-path="url(#clipNursery)"
-			preserveAspectRatio="xMidYMid slice"
-		/>
-
-		<circle cx="840" cy="420" r="58"
-			fill="none" stroke="#34d399" stroke-width="4"/>
-
-		<text class="label" x="840" y="515">NURSERY</text>
-	</g>
+    <!-- NURSERY -->
+    <g class="asset">
+        <image 
+            href="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735" 
+            x="776" y="356" width="128" height="128"
+            clip-path="url(#clipNursery)"
+            preserveAspectRatio="xMidYMid slice"
+            class="asset-image"
+        />
+        
+        <!-- Main ring -->
+        <circle class="asset-ring" cx="840" cy="420" r="64" stroke="#34d399"/>
+        
+        <!-- Pulse ring -->
+        <circle class="asset-pulse" cx="840" cy="420" r="64" stroke="#34d399"/>
+        
+        <text class="label" x="840" y="515">NURSERY</text>
+    </g>
 
 </svg>
 
 <div class="footer">
-	Hover nodes • Focus zoom selection • Growth-scaled structure
+    Hover to explore • Built for growth • Ready for expansion
 </div>
 
 </body>
