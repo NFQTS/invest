@@ -23,14 +23,14 @@
         width: 1100px;
         max-width: 95vw;
         height: auto;
-        filter: drop-shadow(0 25px 50px rgba(0,0,0,0.6));
+        filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
     }
 
     .line {
-        stroke: rgba(255,255,255,0.12);
+        stroke: rgba(255,255,255,0.13);
         stroke-width: 3;
         stroke-dasharray: 12 8;
-        animation: dash 8s linear infinite;
+        animation: dash 10s linear infinite;
     }
 
     @keyframes dash {
@@ -39,52 +39,52 @@
 
     .asset {
         cursor: pointer;
+        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform-origin: center;
     }
 
-    /* Image container for smooth scaling */
+    .asset:hover {
+        transform: scale(1.085);
+    }
+
     .asset-image {
-        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                    filter 0.45s ease;
-        transform-origin: center;
-        filter: brightness(0.95) contrast(1.05);
+        transition: filter 0.4s ease;
     }
 
     .asset:hover .asset-image {
-        transform: scale(1.12);
-        filter: brightness(1.15) contrast(1.1) saturate(1.3);
+        filter: brightness(1.18) contrast(1.12) saturate(1.25);
     }
 
-    /* Pulsing glow ring */
     .asset-ring {
         fill: none;
-        stroke-width: 5;
-        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        stroke-width: 5.5;
+        transition: stroke-width 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
+                    filter 0.4s ease;
     }
 
     .asset:hover .asset-ring {
-        stroke-width: 9;
-        filter: drop-shadow(0 0 18px currentColor);
+        stroke-width: 8.5;
+        filter: drop-shadow(0 0 22px currentColor);
     }
 
-    /* Subtle inner pulse */
     .asset-pulse {
         fill: none;
         stroke: currentColor;
-        stroke-width: 2;
-        opacity: 0.25;
-        animation: pulse 4s ease-in-out infinite;
+        stroke-width: 2.5;
+        opacity: 0.22;
+        animation: pulse 4.2s ease-in-out infinite;
     }
 
     @keyframes pulse {
-        0%, 100% { r: 72; opacity: 0.15; }
-        50% { r: 82; opacity: 0.35; }
+        0%, 100% { r: 74; opacity: 0.18; }
+        50% { r: 85; opacity: 0.38; }
     }
 
     .label {
         fill: #e2e8f0;
-        font-size: 15px;
+        font-size: 15.5px;
         font-weight: 600;
-        letter-spacing: 2.5px;
+        letter-spacing: 2.8px;
         text-anchor: middle;
         pointer-events: none;
         transition: all 0.3s ease;
@@ -93,26 +93,79 @@
 
     .asset:hover .label {
         fill: white;
-        font-size: 16.5px;
+        font-size: 17px;
     }
 
-    .footer {
-        margin-top: 30px;
-        opacity: 0.75;
-        font-size: 13.5px;
-        letter-spacing: 1px;
+    /* Modal */
+    #modal {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(11, 15, 23, 0.92);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        backdrop-filter: blur(12px);
+    }
+
+    .modal-content {
+        background: #161b2b;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        width: 90%;
+        max-width: 460px;
+        padding: 50px 40px;
         text-align: center;
-        line-height: 1.5;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+
+    .modal-content h2 {
+        font-size: 28px;
+        margin: 0 0 16px 0;
+        color: #a5b4fc;
+    }
+
+    .modal-content p {
+        font-size: 17px;
+        opacity: 0.8;
+        line-height: 1.6;
+    }
+
+    .close-btn {
+        margin-top: 30px;
+        padding: 12px 32px;
+        background: transparent;
+        border: 1px solid #64748b;
+        color: #cbd5e1;
+        border-radius: 9999px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+        background: #334155;
+        border-color: #94a3b8;
+        color: white;
     }
 
     .title {
         position: absolute;
         top: 40px;
-        font-size: 28px;
+        font-size: 29px;
         font-weight: 700;
-        letter-spacing: 6px;
-        opacity: 0.9;
+        letter-spacing: 7px;
+        opacity: 0.95;
         text-transform: uppercase;
+    }
+
+    .footer {
+        margin-top: 35px;
+        opacity: 0.8;
+        font-size: 13.8px;
+        letter-spacing: 1px;
+        text-align: center;
     }
 </style>
 </head>
@@ -129,82 +182,103 @@
     <line class="line" x1="260" y1="420" x2="840" y2="420"/>
 
     <defs>
-        <!-- Clip paths -->
         <clipPath id="clipAquatics">
-            <circle cx="260" cy="420" r="72"/>
+            <circle cx="260" cy="420" r="74"/>
         </clipPath>
-
         <clipPath id="clipArt">
-            <circle cx="550" cy="180" r="82"/>
+            <circle cx="550" cy="180" r="84"/>
         </clipPath>
-
         <clipPath id="clipNursery">
-            <circle cx="840" cy="420" r="64"/>
+            <circle cx="840" cy="420" r="66"/>
         </clipPath>
     </defs>
 
     <!-- AQUATICS -->
-    <g class="asset">
+    <g class="asset" id="aquatics">
         <image 
             href="https://images.unsplash.com/photo-1544551763-46a013bb70d5" 
-            x="188" y="348" width="144" height="144"
+            x="186" y="346" width="148" height="148"
             clip-path="url(#clipAquatics)"
             preserveAspectRatio="xMidYMid slice"
             class="asset-image"
         />
-        
-        <!-- Main ring -->
-        <circle class="asset-ring" cx="260" cy="420" r="72" stroke="#22d3ee"/>
-        
-        <!-- Pulse ring -->
-        <circle class="asset-pulse" cx="260" cy="420" r="72" stroke="#22d3ee"/>
-        
-        <text class="label" x="260" y="525">AQUATICS</text>
+        <circle class="asset-ring" cx="260" cy="420" r="74" stroke="#22d3ee"/>
+        <circle class="asset-pulse" cx="260" cy="420" r="74" stroke="#22d3ee"/>
+        <text class="label" x="260" y="528">AQUATICS</text>
     </g>
 
     <!-- ART -->
-    <g class="asset">
+    <g class="asset" id="art">
         <image 
             href="https://images.unsplash.com/photo-1549490349-8643362247b5" 
-            x="468" y="98" width="164" height="164"
+            x="466" y="96" width="168" height="168"
             clip-path="url(#clipArt)"
             preserveAspectRatio="xMidYMid slice"
             class="asset-image"
         />
-        
-        <!-- Main ring -->
-        <circle class="asset-ring" cx="550" cy="180" r="82" stroke="#c026d3"/>
-        
-        <!-- Pulse ring -->
-        <circle class="asset-pulse" cx="550" cy="180" r="82" stroke="#c026d3"/>
-        
-        <text class="label" x="550" y="290">ART</text>
+        <circle class="asset-ring" cx="550" cy="180" r="84" stroke="#c026d3"/>
+        <circle class="asset-pulse" cx="550" cy="180" r="84" stroke="#c026d3"/>
+        <text class="label" x="550" y="292">ART</text>
     </g>
 
     <!-- NURSERY -->
-    <g class="asset">
+    <g class="asset" id="nursery">
         <image 
             href="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735" 
-            x="776" y="356" width="128" height="128"
+            x="774" y="354" width="132" height="132"
             clip-path="url(#clipNursery)"
             preserveAspectRatio="xMidYMid slice"
             class="asset-image"
         />
-        
-        <!-- Main ring -->
-        <circle class="asset-ring" cx="840" cy="420" r="64" stroke="#34d399"/>
-        
-        <!-- Pulse ring -->
-        <circle class="asset-pulse" cx="840" cy="420" r="64" stroke="#34d399"/>
-        
-        <text class="label" x="840" y="515">NURSERY</text>
+        <circle class="asset-ring" cx="840" cy="420" r="66" stroke="#34d399"/>
+        <circle class="asset-pulse" cx="840" cy="420" r="66" stroke="#34d399"/>
+        <text class="label" x="840" y="518">NURSERY</text>
     </g>
 
 </svg>
 
 <div class="footer">
-    Hover to explore • Built for growth • Ready for expansion
+    Click nodes to explore • Unified scaling • Premium hover feedback
 </div>
+
+<!-- Modal -->
+<div id="modal">
+    <div class="modal-content">
+        <h2>Asset Details</h2>
+        <p id="modal-asset-name" style="font-size:22px; font-weight:600; margin:20px 0 10px;"></p>
+        <p>Coming soon — Full portfolio analytics, performance charts, and investment tools will appear here.</p>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<script>
+    const assets = document.querySelectorAll('.asset');
+    const modal = document.getElementById('modal');
+    const modalName = document.getElementById('modal-asset-name');
+
+    assets.forEach(asset => {
+        asset.addEventListener('click', () => {
+            const id = asset.id;
+            let name = '';
+            
+            if (id === 'aquatics') name = 'Aquatics Fund';
+            else if (id === 'art') name = 'Digital Art Vault';
+            else if (id === 'nursery') name = 'Premium Nursery';
+
+            modalName.textContent = name;
+            modal.style.display = 'flex';
+        });
+    });
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Close modal when clicking outside content
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+</script>
 
 </body>
 </html>
