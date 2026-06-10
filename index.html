@@ -7,178 +7,189 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@500;600;700&display=swap');
+        
+        :root {
+            --accent: #a5f3fc;
+        }
         
         body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .title-font {
             font-family: 'Space Grotesk', sans-serif;
         }
 
         .star-bg {
             position: fixed;
             inset: 0;
-            background: #000;
-            overflow: hidden;
+            background: #050505;
             z-index: -2;
+            overflow: hidden;
         }
 
         .stars {
             position: absolute;
             inset: 0;
-            background: transparent;
             background-image: 
-                radial-gradient(white 1px, transparent 1px),
-                radial-gradient(white 1px, transparent 1px);
-            background-position: 0 0, 40px 40px;
-            background-size: 80px 80px;
-            animation: starDrift 120s linear infinite;
-            opacity: 0.6;
+                radial-gradient(circle, rgba(255,255,255,0.7) 0.8px, transparent 1px);
+            background-size: 110px 110px;
+            animation: drift 160s linear infinite;
+            opacity: 0.45;
         }
 
-        @keyframes starDrift {
-            from { background-position: 0 0, 40px 40px; }
-            to { background-position: 800px 600px, 840px 640px; }
+        @keyframes drift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(80px, 60px); }
         }
 
         .nebula {
             position: absolute;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle at 30% 40%, rgba(34, 211, 238, 0.25) 0%, transparent 60%);
-            filter: blur(120px);
-            animation: nebulaFloat 90s ease-in-out infinite;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(165, 243, 252, 0.12) 0%, transparent 65%);
+            filter: blur(110px);
+            opacity: 0.6;
+        }
+
+        .hero-title {
+            font-size: 15vw;
+            line-height: 0.82;
+            letter-spacing: -0.07em;
         }
 
         .slide {
-            transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .slider-container {
-            scroll-behavior: smooth;
+            transition: all 1.1s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .category-card {
-            transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         }
         
         .category-card:hover {
-            transform: scale(1.04) translateY(-20px);
-            filter: brightness(1.15);
+            transform: translateY(-30px) scale(1.03);
         }
 
-        .glow {
-            text-shadow: 
-                0 0 40px rgb(34 211 238),
-                0 0 80px rgb(34 211 238);
+        .category-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, rgba(255,255,255,0.06), transparent);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        
+        .category-card:hover::before {
+            opacity: 1;
         }
     </style>
 </head>
 <body class="bg-black text-white overflow-hidden">
-    <!-- Space Background -->
+    <!-- Deep Space Background -->
     <div class="star-bg">
         <div class="stars"></div>
-        <div class="nebula" style="top: -200px; left: -200px;"></div>
-        <div class="nebula" style="bottom: -300px; right: -100px; background: radial-gradient(circle at 70% 60%, rgba(165, 243, 252, 0.18) 0%, transparent 65%); animation-delay: -35s;"></div>
+        <div class="nebula top-[-180px] left-[-180px]"></div>
+        <div class="nebula bottom-[-220px] right-[-150px] bg-gradient-to-br from-cyan-300/10 to-transparent" style="animation: nebulaFloat 110s ease-in-out infinite;"></div>
     </div>
 
-    <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-8">
-            <div class="flex items-center gap-x-3">
-                <div class="w-7 h-7 rounded-full bg-cyan-400 flex items-center justify-center text-black text-xl font-bold">U</div>
-                <span class="text-2xl tracking-tighter font-semibold">UNPRINCIPLED</span>
+    <div class="min-h-screen flex flex-col relative z-10">
+        <!-- Minimal Header -->
+        <header class="fixed top-0 left-0 right-0 z-50 px-10 py-8 flex items-center justify-between border-b border-white/5">
+            <div class="flex items-center gap-x-2.5">
+                <div class="w-6 h-px bg-white"></div>
+                <span class="text-xs tracking-[2.5px] font-medium text-white/60">UNPRINCIPLED</span>
             </div>
-            <div class="text-sm uppercase tracking-[3px] text-cyan-400 font-medium">ASSETS</div>
+            <div class="text-[13px] tracking-[3px] font-medium text-cyan-300">ASSETS</div>
         </header>
 
-        <!-- Hero Title -->
-        <div class="flex-1 flex items-center justify-center pt-20 relative z-10">
-            <div class="text-center">
-                <div class="inline-flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-3xl mb-6">
-                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span class="text-xs tracking-widest">LIVE COLLECTION</span>
+        <!-- Hero -->
+        <div class="flex-1 flex items-center justify-center pt-12">
+            <div class="text-center px-6">
+                <div class="mb-6 inline-block px-5 py-2 border border-white/10 rounded-full text-xs tracking-widest text-white/50">
+                    CURATED • VERIFIED • GROWING
                 </div>
                 
-                <h1 class="text-[13vw] leading-none font-bold tracking-[-6px] glow" style="font-size: 13vw;">
+                <h1 class="title-font hero-title font-semibold tracking-tighter text-white glow">
                     ASSETS
                 </h1>
                 
-                <p class="mt-4 text-gray-400 text-xl max-w-md mx-auto">
-                    Real. Growing. Yours.
+                <p class="mt-6 text-lg text-white/60 max-w-sm mx-auto">
+                    Three realms of living value
                 </p>
             </div>
         </div>
 
-        <!-- Creative Slider -->
-        <div class="relative pb-20">
+        <!-- Elegant Horizontal Slider -->
+        <div class="pb-20 px-8">
             <div id="slider" 
-                 class="slider-container flex gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-10 pb-12"
+                 class="flex gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8 scroll-smooth"
                  style="scrollbar-width: none; -ms-overflow-style: none;">
                 
-                <!-- Aquatics Slide -->
-                <div onclick="selectSlide(0)" 
-                     class="category-card min-w-[520px] h-[520px] snap-center bg-zinc-950 rounded-3xl overflow-hidden border border-white/10 cursor-pointer group">
-                    <div class="h-full relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/30 to-blue-600/30 group-hover:from-cyan-400/40 transition-all"></div>
-                        <div class="absolute inset-0 flex items-center justify-center text-[180px] transition-transform group-hover:scale-110 duration-700">🐠</div>
-                        <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
-                            <div class="uppercase text-cyan-400 text-sm tracking-widest mb-2">AQUATICS</div>
-                            <div class="text-5xl font-semibold">Living Waters</div>
-                            <div class="mt-4 text-gray-300">Breeding programs • Guppies • Bettas • Shrimp • Snails • Aquascapes</div>
-                        </div>
-                        <div class="absolute top-8 right-8 text-xs px-5 py-2 bg-black/70 backdrop-blur rounded-3xl border border-cyan-400/30">12,400+ specimens</div>
+                <!-- Aquatics -->
+                <div onclick="goToSlide(0)" 
+                     class="category-card min-w-[460px] h-[520px] snap-center bg-zinc-950/80 border border-white/10 rounded-3xl overflow-hidden relative cursor-pointer group">
+                    <div class="absolute inset-0 bg-[radial-gradient(at_40%_30%,rgba(103,232,249,0.25),transparent_70%)]"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-[168px] transition-all duration-700 group-hover:scale-105 group-active:scale-95">
+                        🐟
                     </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-10">
+                        <div class="uppercase text-xs tracking-[2px] text-cyan-300 mb-2">AQUATICS</div>
+                        <div class="text-4xl font-semibold title-font tracking-tight">Living Waters</div>
+                        <p class="text-white/60 mt-3 pr-12">Breeding sanctuaries. Biodiversity in motion.</p>
+                    </div>
+                    <div class="absolute top-8 right-8 text-[10px] font-mono bg-black/60 px-4 py-2 rounded-2xl border border-cyan-400/20">2.4K specimens</div>
                 </div>
 
-                <!-- Nursery Slide -->
-                <div onclick="selectSlide(1)" 
-                     class="category-card min-w-[520px] h-[520px] snap-center bg-zinc-950 rounded-3xl overflow-hidden border border-white/10 cursor-pointer group">
-                    <div class="h-full relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-teal-600/30 group-hover:from-emerald-400/40 transition-all"></div>
-                        <div class="absolute inset-0 flex items-center justify-center text-[180px] transition-transform group-hover:scale-110 duration-700">🌿</div>
-                        <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
-                            <div class="uppercase text-emerald-400 text-sm tracking-widest mb-2">NURSERY</div>
-                            <div class="text-5xl font-semibold">Living Earth</div>
-                            <div class="mt-4 text-gray-300">Rare plants • Propagation • Native species • Indoor jungles</div>
-                        </div>
-                        <div class="absolute top-8 right-8 text-xs px-5 py-2 bg-black/70 backdrop-blur rounded-3xl border border-emerald-400/30">2,800+ plants</div>
+                <!-- Nursery -->
+                <div onclick="goToSlide(1)" 
+                     class="category-card min-w-[460px] h-[520px] snap-center bg-zinc-950/80 border border-white/10 rounded-3xl overflow-hidden relative cursor-pointer group">
+                    <div class="absolute inset-0 bg-[radial-gradient(at_50%_40%,rgba(134,239,172,0.22),transparent_70%)]"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-[168px] transition-all duration-700 group-hover:scale-105 group-active:scale-95">
+                        🌱
                     </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-10">
+                        <div class="uppercase text-xs tracking-[2px] text-emerald-300 mb-2">NURSERY</div>
+                        <div class="text-4xl font-semibold title-font tracking-tight">Living Earth</div>
+                        <p class="text-white/60 mt-3 pr-12">Rare specimens. Propagation. Future forests.</p>
+                    </div>
+                    <div class="absolute top-8 right-8 text-[10px] font-mono bg-black/60 px-4 py-2 rounded-2xl border border-emerald-400/20">1.9K plants</div>
                 </div>
 
-                <!-- Art Slide -->
-                <div onclick="selectSlide(2)" 
-                     class="category-card min-w-[520px] h-[520px] snap-center bg-zinc-950 rounded-3xl overflow-hidden border border-white/10 cursor-pointer group">
-                    <div class="h-full relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-pink-600/30 group-hover:from-purple-400/40 transition-all"></div>
-                        <div class="absolute inset-0 flex items-center justify-center text-[160px] transition-transform group-hover:scale-110 duration-700">🎨</div>
-                        <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-black via-black/80 to-transparent">
-                            <div class="uppercase text-purple-400 text-sm tracking-widest mb-2">ART</div>
-                            <div class="text-5xl font-semibold">Timeless Creations</div>
-                            <div class="mt-4 text-gray-300">Digital • Physical • Music • Generative collections</div>
-                        </div>
-                        <div class="absolute top-8 right-8 text-xs px-5 py-2 bg-black/70 backdrop-blur rounded-3xl border border-purple-400/30">87 pieces</div>
+                <!-- Art -->
+                <div onclick="goToSlide(2)" 
+                     class="category-card min-w-[460px] h-[520px] snap-center bg-zinc-950/80 border border-white/10 rounded-3xl overflow-hidden relative cursor-pointer group">
+                    <div class="absolute inset-0 bg-[radial-gradient(at_30%_50%,rgba(192,132,252,0.22),transparent_70%)]"></div>
+                    <div class="absolute inset-0 flex items-center justify-center text-[168px] transition-all duration-700 group-hover:scale-105 group-active:scale-95">
+                        ✧
                     </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-10">
+                        <div class="uppercase text-xs tracking-[2px] text-purple-300 mb-2">ART &amp; CULTURE</div>
+                        <div class="text-4xl font-semibold title-font tracking-tight">Timeless Value</div>
+                        <p class="text-white/60 mt-3 pr-12">Digital • Physical • Sonic. Eternal collections.</p>
+                    </div>
+                    <div class="absolute top-8 right-8 text-[10px] font-mono bg-black/60 px-4 py-2 rounded-2xl border border-purple-400/20">94 works</div>
                 </div>
             </div>
 
-            <!-- Slider Controls -->
-            <div class="flex items-center justify-center gap-8 mt-8">
+            <!-- Minimal Controls -->
+            <div class="flex justify-center items-center gap-x-10 mt-4">
                 <button onclick="prevSlide()" 
-                        class="w-14 h-14 rounded-2xl border border-white/20 hover:border-cyan-400 flex items-center justify-center transition-all active:scale-90">
-                    <i class="fa-solid fa-arrow-left text-xl"></i>
+                        class="group flex items-center gap-x-3 text-sm uppercase tracking-widest text-white/50 hover:text-white transition-colors">
+                    <span class="block w-8 h-px bg-white/30 group-hover:bg-white"></span>
+                    PREV
                 </button>
                 
-                <div class="flex gap-3">
-                    <button onclick="goToSlide(0)" id="dot-0"
-                            class="w-4 h-4 rounded-full bg-cyan-400 transition-all"></button>
-                    <button onclick="goToSlide(1)" id="dot-1"
-                            class="w-4 h-4 rounded-full bg-white/30 hover:bg-white/60 transition-all"></button>
-                    <button onclick="goToSlide(2)" id="dot-2"
-                            class="w-4 h-4 rounded-full bg-white/30 hover:bg-white/60 transition-all"></button>
+                <div class="flex gap-2">
+                    <button onclick="goToSlide(0)" id="dot-0" class="w-2 h-2 rounded-full bg-cyan-300 transition-all"></button>
+                    <button onclick="goToSlide(1)" id="dot-1" class="w-2 h-2 rounded-full bg-white/30 hover:bg-white/70 transition-all"></button>
+                    <button onclick="goToSlide(2)" id="dot-2" class="w-2 h-2 rounded-full bg-white/30 hover:bg-white/70 transition-all"></button>
                 </div>
                 
                 <button onclick="nextSlide()" 
-                        class="w-14 h-14 rounded-2xl border border-white/20 hover:border-cyan-400 flex items-center justify-center transition-all active:scale-90">
-                    <i class="fa-solid fa-arrow-right text-xl"></i>
+                        class="group flex items-center gap-x-3 text-sm uppercase tracking-widest text-white/50 hover:text-white transition-colors">
+                    NEXT
+                    <span class="block w-8 h-px bg-white/30 group-hover:bg-white"></span>
                 </button>
             </div>
         </div>
@@ -186,76 +197,59 @@
 
     <script>
         const slider = document.getElementById('slider');
-        let currentIndex = 0;
-        const slideWidth = 528; // card width + gap
+        let current = 0;
+        const cardWidth = 468; // card width + gap
 
         function updateDots() {
             for (let i = 0; i < 3; i++) {
                 const dot = document.getElementById(`dot-${i}`);
-                if (i === currentIndex) {
-                    dot.classList.add('bg-cyan-400', 'scale-125');
-                    dot.classList.remove('bg-white/30');
-                } else {
-                    dot.classList.remove('bg-cyan-400', 'scale-125');
-                    dot.classList.add('bg-white/30');
-                }
+                dot.classList.toggle('bg-cyan-300', i === current);
+                dot.classList.toggle('scale-125', i === current);
             }
         }
 
-        function goToSlide(index) {
-            currentIndex = index;
+        function goToSlide(n) {
+            current = n;
             slider.scrollTo({
-                left: currentIndex * slideWidth,
-                behavior: 'smooth'
+                left: current * cardWidth,
+                behavior: "smooth"
             });
             updateDots();
         }
 
         function nextSlide() {
-            currentIndex = (currentIndex + 1) % 3;
-            goToSlide(currentIndex);
+            current = (current + 1) % 3;
+            goToSlide(current);
         }
 
         function prevSlide() {
-            currentIndex = (currentIndex - 1 + 3) % 3;
-            goToSlide(currentIndex);
+            current = (current - 1 + 3) % 3;
+            goToSlide(current);
         }
 
-        function selectSlide(index) {
-            goToSlide(index);
-            // Satisfying pulse on click
-            const cards = document.querySelectorAll('.category-card');
-            cards[index].style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                cards[index].style.transform = 'scale(1)';
-            }, 180);
-        }
-
-        // Auto-advance (addictive feel)
-        let autoInterval;
-        function startAutoPlay() {
-            autoInterval = setInterval(() => {
-                nextSlide();
-            }, 5200);
-        }
-
-        // Pause on hover
-        slider.addEventListener('mouseenter', () => clearInterval(autoInterval));
-        slider.addEventListener('mouseleave', startAutoPlay);
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
+        // Keyboard support
+        document.addEventListener('keydown', e => {
+            if (e.key === "ArrowRight") nextSlide();
+            if (e.key === "ArrowLeft") prevSlide();
         });
 
-        // Initialize
+        // Auto advance for that addictive feel
+        let autoPlay;
+        function startAuto() {
+            autoPlay = setInterval(() => {
+                nextSlide();
+            }, 5800);
+        }
+
         window.onload = () => {
             updateDots();
-            startAutoPlay();
+            startAuto();
             
-            // Make scroll snap feel premium
-            console.log('%c✦ ASSETS landing page ready — enjoy the ride', 'color:#67e8f9; font-family:monospace');
+            // Pause autoplay on interaction
+            slider.addEventListener('mouseenter', () => clearInterval(autoPlay));
+            slider.addEventListener('mouseleave', startAuto);
+            
+            console.log('%c✦ Minimal ASSETS experience loaded', 'color:#a5f3fc; font-family:monospace');
         };
     </script>
 </body>
