@@ -114,7 +114,7 @@
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 20px;
         width: 90%;
-        max-width: 460px;
+        max-width: 480px;
         padding: 50px 40px;
         text-align: center;
         box-shadow: 0 30px 80px rgba(0,0,0,0.6);
@@ -130,6 +130,15 @@
         font-size: 17px;
         opacity: 0.8;
         line-height: 1.6;
+        margin: 8px 0;
+    }
+
+    .modal-list {
+        text-align: left;
+        display: inline-block;
+        margin: 20px 0;
+        font-size: 16px;
+        opacity: 0.9;
     }
 
     .close-btn {
@@ -148,6 +157,32 @@
         background: #334155;
         border-color: #94a3b8;
         color: white;
+    }
+
+    .donate-section {
+        margin-top: 35px;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .donate-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: #1e2937;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 9999px;
+        font-size: 15px;
+        margin: 8px 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .donate-btn:hover {
+        background: #334155;
+        transform: translateY(-2px);
     }
 
     .title {
@@ -185,7 +220,7 @@
         <clipPath id="clipAquatics">
             <circle cx="260" cy="420" r="74"/>
         </clipPath>
-        <clipPath id="clipArt">
+        <clipPath id="clipData">
             <circle cx="550" cy="180" r="84"/>
         </clipPath>
         <clipPath id="clipNursery">
@@ -207,18 +242,18 @@
         <text class="label" x="260" y="528">AQUATICS</text>
     </g>
 
-    <!-- ART -->
-    <g class="asset" id="art">
+    <!-- DATA (replaced ART) -->
+    <g class="asset" id="data">
         <image 
-            href="https://images.unsplash.com/photo-1549490349-8643362247b5" 
+            href="https://images.unsplash.com/photo-1551288049-bebda4e38f71" 
             x="466" y="96" width="168" height="168"
-            clip-path="url(#clipArt)"
+            clip-path="url(#clipData)"
             preserveAspectRatio="xMidYMid slice"
             class="asset-image"
         />
-        <circle class="asset-ring" cx="550" cy="180" r="84" stroke="#c026d3"/>
-        <circle class="asset-pulse" cx="550" cy="180" r="84" stroke="#c026d3"/>
-        <text class="label" x="550" y="292">ART</text>
+        <circle class="asset-ring" cx="550" cy="180" r="84" stroke="#8b5cf6"/>
+        <circle class="asset-pulse" cx="550" cy="180" r="84" stroke="#8b5cf6"/>
+        <text class="label" x="550" y="292">DATA</text>
     </g>
 
     <!-- NURSERY -->
@@ -244,9 +279,23 @@
 <!-- Modal -->
 <div id="modal">
     <div class="modal-content">
-        <h2>Asset Details</h2>
+        <h2 id="modal-title">Asset Details</h2>
         <p id="modal-asset-name" style="font-size:22px; font-weight:600; margin:20px 0 10px;"></p>
-        <p>Coming soon — Full portfolio analytics, performance charts, and investment tools will appear here.</p>
+        
+        <div id="modal-content-area">
+            <!-- Dynamic content injected here by JS -->
+        </div>
+
+        <div class="donate-section">
+            <p style="margin-bottom:15px; opacity:0.85;">Help us grow the network</p>
+            <div>
+                <button class="donate-btn" onclick="copyAddress('BTC')">BTC</button>
+                <button class="donate-btn" onclick="copyAddress('ETH')">ETH</button>
+                <button class="donate-btn" onclick="copyAddress('SOL')">SOL</button>
+            </div>
+            <small style="margin-top:12px; display:block; opacity:0.6;">Addresses copied to clipboard when clicked</small>
+        </div>
+
         <button class="close-btn" onclick="closeModal()">Close</button>
     </div>
 </div>
@@ -255,17 +304,66 @@
     const assets = document.querySelectorAll('.asset');
     const modal = document.getElementById('modal');
     const modalName = document.getElementById('modal-asset-name');
+    const modalContentArea = document.getElementById('modal-content-area');
+
+    function copyAddress(crypto) {
+        let address = '';
+        if (crypto === 'BTC') address = 'bc1qxy2kdyhj2s8v3q7z2f3n2z9k5v6m7n8p9q0r'; // placeholder
+        else if (crypto === 'ETH') address = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+        else if (crypto === 'SOL') address = '9xQeWvG8Z3q6Y8vR5tY6u7v8w9x0y1z2A3B4C5D6E7F';
+        
+        navigator.clipboard.writeText(address).then(() => {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            setTimeout(() => btn.textContent = originalText, 1800);
+        });
+    }
 
     assets.forEach(asset => {
         asset.addEventListener('click', () => {
             const id = asset.id;
             let name = '';
-            
-            if (id === 'aquatics') name = 'Aquatics Fund';
-            else if (id === 'art') name = 'Digital Art Vault';
-            else if (id === 'nursery') name = 'Premium Nursery';
+            let html = '';
+
+            if (id === 'aquatics') {
+                name = 'Aquatics Fund';
+                html = `
+                    <div class="modal-list">
+                        <p><strong>Livestock Species Breeding:</strong> 5</p>
+                        <p><strong>Plant Species:</strong> 7</p>
+                        <p><strong>Indoor Aquarium Space:</strong> ~700 Gallons</p>
+                        <p><strong>Outdoor Pond Space:</strong> ~2,500 Gallons</p>
+                    </div>
+                    <p style="font-size:15px; margin-top:20px;">Yearly growth estimates and buffers coming soon.</p>
+                `;
+            } 
+            else if (id === 'data') {
+                name = 'Data Vault';
+                html = `
+                    <div class="modal-list">
+                        <p><strong>Blockchain Activity</strong></p>
+                        <p><strong>Email Lists</strong></p>
+                        <p><strong>Social Media Accounts</strong></p>
+                        <p><strong>SMS Lists</strong></p>
+                        <p style="margin-top:20px; opacity:0.7;">Coming Soon...</p>
+                    </div>
+                    <p style="font-size:15px; margin-top:20px;">Full analytics, on-chain metrics, and audience insights will appear here.</p>
+                `;
+            } 
+            else if (id === 'nursery') {
+                name = 'Premium Nursery';
+                html = `
+                    <div class="modal-list">
+                        <p><strong>Landscaping Plant Species:</strong> 4</p>
+                        <p><strong>Tree Species:</strong> 1</p>
+                    </div>
+                    <p style="font-size:15px; margin-top:20px;">Expansion plans and growth projections coming soon.</p>
+                `;
+            }
 
             modalName.textContent = name;
+            modalContentArea.innerHTML = html;
             modal.style.display = 'flex';
         });
     });
