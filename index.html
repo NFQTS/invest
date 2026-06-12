@@ -96,6 +96,80 @@
         font-size: 17px;
     }
 
+    /* Leaderboard */
+    .leaderboard {
+        margin: 40px 0 20px;
+        width: 100%;
+        max-width: 520px;
+        background: #161b2b;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 25px 30px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .leaderboard h3 {
+        text-align: center;
+        margin: 0 0 20px 0;
+        font-size: 22px;
+        color: #a5b4fc;
+        letter-spacing: 3px;
+    }
+
+    .leaderboard-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .leader-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 14px 18px;
+        margin-bottom: 8px;
+        background: rgba(255,255,255,0.03);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .leader-item:hover {
+        background: rgba(139, 92, 246, 0.15);
+        transform: translateX(8px);
+    }
+
+    .rank {
+        width: 32px;
+        height: 32px;
+        background: #334155;
+        color: #e0e7ff;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 15px;
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1e2937; }
+    .rank-2 { background: linear-gradient(135deg, #e2e8f0, #94a3b8); color: #1e2937; }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #b45309); color: white; }
+
+    .leader-name {
+        flex: 1;
+        font-weight: 600;
+    }
+
+    .leader-amount {
+        font-family: monospace;
+        color: #67e8f9;
+        font-weight: 700;
+    }
+
+    .trophy {
+        font-size: 22px;
+    }
+
     /* Modal */
     #modal {
         position: fixed;
@@ -196,7 +270,7 @@
     }
 
     .footer {
-        margin-top: 35px;
+        margin-top: 25px;
         opacity: 0.8;
         font-size: 13.8px;
         letter-spacing: 1px;
@@ -242,7 +316,7 @@
         <text class="label" x="260" y="528">AQUATICS</text>
     </g>
 
-    <!-- DATA (replaced ART) -->
+    <!-- DATA -->
     <g class="asset" id="data">
         <image 
             href="https://images.unsplash.com/photo-1551288049-bebda4e38f71" 
@@ -272,6 +346,17 @@
 
 </svg>
 
+<!-- FUN DONOR LEADERBOARD -->
+<div class="leaderboard">
+    <h3>🐟 HALL OF FAME 🐟</h3>
+    <ul class="leaderboard-list" id="leaderboard-list">
+        <!-- Populated by JavaScript -->
+    </ul>
+    <p style="text-align:center; margin-top:18px; font-size:13px; opacity:0.7;">
+        Thank you legends • Real-time updates coming soon
+    </p>
+</div>
+
 <div class="footer">
     Click nodes to explore • Unified scaling • Premium hover feedback
 </div>
@@ -293,7 +378,7 @@
                 <button class="donate-btn" onclick="copyAddress('ETH')">ETH</button>
                 <button class="donate-btn" onclick="copyAddress('SOL')">SOL</button>
             </div>
-            <small style="margin-top:12px; display:block; opacity:0.6;">Addresses copied to clipboard when clicked</small>
+            <small style="margin-top:12px; display:block; opacity:0.6;">Addresses copied to clipboard</small>
         </div>
 
         <button class="close-btn" onclick="closeModal()">Close</button>
@@ -301,14 +386,38 @@
 </div>
 
 <script>
-    const assets = document.querySelectorAll('.asset');
-    const modal = document.getElementById('modal');
-    const modalName = document.getElementById('modal-asset-name');
-    const modalContentArea = document.getElementById('modal-content-area');
+    // ==================== LEADERBOARD DATA ====================
+    const donors = [
+        { rank: 1, name: "AquaWhale.eth", amount: "$2,450", emoji: "🐋" },
+        { rank: 2, name: "PondLegend42", amount: "$1,890", emoji: "🌊" },
+        { rank: 3, name: "TilapiaKing", amount: "$1,250", emoji: "🐟" },
+        { rank: 4, name: "BluegillBoss", amount: "$980", emoji: "🐠" },
+        { rank: 5, name: "CryptoKoi", amount: "$750", emoji: "🎏" },
+        { rank: 6, name: "SustainableFin", amount: "$620", emoji: "🌱" },
+        { rank: 7, name: "FryFundraiser", amount: "$410", emoji: "🐣" }
+    ];
 
+    function renderLeaderboard() {
+        const list = document.getElementById('leaderboard-list');
+        list.innerHTML = '';
+
+        donors.forEach(donor => {
+            const li = document.createElement('li');
+            li.className = 'leader-item';
+            li.innerHTML = `
+                <div class="rank ${donor.rank === 1 ? 'rank-1' : donor.rank === 2 ? 'rank-2' : donor.rank === 3 ? 'rank-3' : ''}">${donor.rank}</div>
+                <span class="trophy">${donor.emoji}</span>
+                <span class="leader-name">${donor.name}</span>
+                <span class="leader-amount">${donor.amount}</span>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    // ==================== DONATION ADDRESSES ====================
     function copyAddress(crypto) {
         let address = '';
-        if (crypto === 'BTC') address = 'bc1qt7920ytslkkvkx6rcmffclgknvurn8umpuuz3g'; // placeholder
+        if (crypto === 'BTC') address = 'bc1qt7920ytslkkvkx6rcmffclgknvurn8umpuuz3g';
         else if (crypto === 'ETH') address = '0x73Fe0f0Fa44035607b9ddB5Ba560301Ae7C96a54';
         else if (crypto === 'SOL') address = '4CYdS9QxVS9tRYtkoi6WKNs1wYL81uSjAjrmjtJ2vT7A';
         
@@ -319,6 +428,12 @@
             setTimeout(() => btn.textContent = originalText, 1800);
         });
     }
+
+    // ==================== MODAL LOGIC ====================
+    const assets = document.querySelectorAll('.asset');
+    const modal = document.getElementById('modal');
+    const modalName = document.getElementById('modal-asset-name');
+    const modalContentArea = document.getElementById('modal-content-area');
 
     assets.forEach(asset => {
         asset.addEventListener('click', () => {
@@ -333,9 +448,9 @@
                         <p><strong>Livestock Species Breeding:</strong> 5</p>
                         <p><strong>Plant Species:</strong> 7</p>
                         <p><strong>Indoor Aquarium Space:</strong> ~700 Gallons</p>
-                        <p><strong>Outdoor Pond Space:</strong> ~2,500 Gallons</p>
+                        <p><strong>Outdoor Pond Space:</strong> 2× 1,000 gal</p>
                     </div>
-                    <p style="font-size:15px; margin-top:20px;">Growth estimates coming soon.</p>
+                    <p style="font-size:15px; margin-top:20px;">Growth estimates and feast planning coming soon.</p>
                 `;
             } 
             else if (id === 'data') {
@@ -348,7 +463,6 @@
                         <p><strong>SMS Lists</strong></p>
                         <p style="margin-top:20px; opacity:0.7;">Coming Soon...</p>
                     </div>
-                    <p style="font-size:15px; margin-top:20px;">Full analytics and insights will appear here.</p>
                 `;
             } 
             else if (id === 'nursery') {
@@ -358,7 +472,7 @@
                         <p><strong>Landscaping Plant Species:</strong> 4</p>
                         <p><strong>Tree Species:</strong> 1</p>
                     </div>
-                    <p style="font-size:15px; margin-top:20px;">Expansion plans and growth projections coming soon.</p>
+                    <p style="font-size:15px; margin-top:20px;">Expansion plans coming soon.</p>
                 `;
             }
 
@@ -372,10 +486,12 @@
         modal.style.display = 'none';
     }
 
-    // Close modal when clicking outside content
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
+
+    // Initialize everything
+    renderLeaderboard();
 </script>
 
 </body>
